@@ -1,0 +1,6 @@
+author: Gorjan Shukov
+github_url: https://github.com/sukov/PagedMediaViewer
+root_url: https://sukov.github.io/PagedMediaViewer/
+output: docs
+theme: fullwidth
+xcodebuild_arguments: [-workspace, 'Example/PagedMediaViewer.xcworkspace', -scheme, 'PagedMediaViewer', -destination, generic/platform=iOS]
