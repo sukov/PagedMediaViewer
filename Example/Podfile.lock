@@ -1,0 +1,16 @@
+PODS:
+  - PagedMediaViewer (1.0.0)
+
+DEPENDENCIES:
+  - PagedMediaViewer (from `../`)
+
+EXTERNAL SOURCES:
+  PagedMediaViewer:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  PagedMediaViewer: 274277396d2466ceaf80de28ec57d37c079c0aa2
+
+PODFILE CHECKSUM: 2d700dfc9b744cd3989fad7595ae7d66e91c020b
+
+COCOAPODS: 1.16.2

@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>PagedMediaViewer  Reference</title>
+    <link rel="stylesheet" type="text/css" href="css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="css/highlight.css" />
+    <meta charset="utf-8">
+    <script src="js/jquery.min.js" defer></script>
+    <script src="js/jazzy.js" defer></script>
+    
+    <script src="js/lunr.min.js" defer></script>
+    <script src="js/typeahead.jquery.js" defer></script>
+    <script src="js/jazzy.search.js" defer></script>
+  </head>
+  <body>
+
+
+    <a title="PagedMediaViewer  Reference"></a>
+
+    <header class="header">
+      <p class="header-col header-col--primary">
+        <a class="header-link" href="index.html">
+          PagedMediaViewer 1.0.0 Docs
+        </a>
+         (87% documented)
+      </p>
+    
+      <div class="header-col--secondary">
+        <form role="search" action="search.json">
+          <input type="text" placeholder="Search documentation" data-typeahead>
+        </form>
+      </div>
+    
+        <p class="header-col header-col--secondary">
+          <a class="header-link" href="https://github.com/sukov/PagedMediaViewer">
+            <img class="header-icon" src="img/gh.png" alt="GitHub"/>
+            View on GitHub
+          </a>
+        </p>
+    
+        <p class="header-col header-col--secondary">
+          <a class="header-link" href="dash-feed://https%3A%2F%2Fsukov.github.io%2FPagedMediaViewer%2Fdocsets%2FPagedMediaViewer.xml">
+            <img class="header-icon" src="img/dash.png" alt="Dash"/>
+            Install in Dash
+          </a>
+        </p>
+    </header>
+
+    <p class="breadcrumbs">
+      <a class="breadcrumb" href="index.html">PagedMediaViewer</a>
+    </p>
+
+    <div class="content-wrapper">
+      <nav class="navigation">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="Classes.html">Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Classes/PagedMediaViewController.html">PagedMediaViewController</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="Protocols.html">Protocols</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Protocols/PagedMediaDataSource.html">PagedMediaDataSource</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Protocols/PagedMediaDelegate.html">PagedMediaDelegate</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Protocols/PagedMediaItem.html">PagedMediaItem</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+
+        <section class="section">
+          <div class="section-content top-matter">
+            
+            <h1 id='pagedmediaviewer' class='heading'>PagedMediaViewer</h1>
+
+<p><a href="https://cocoapods.org/pods/PagedMediaViewer"><img src="https://img.shields.io/cocoapods/v/PagedMediaViewer.svg?style=flat" alt="Version"></a>
+<a href="https://cocoapods.org/pods/PagedMediaViewer"><img src="https://img.shields.io/cocoapods/l/PagedMediaViewer.svg?style=flat" alt="License"></a>
+<a href="https://swift.org"><img src="https://img.shields.io/badge/Language-Swift%205.0-orange.svg?style=flat" alt="Language Swift"></a>
+<a href="https://cocoapods.org/pods/PagedMediaViewer"><img src="https://img.shields.io/cocoapods/p/PagedMediaViewer.svg?style=flat" alt="Platform"></a>
+<a href="https://www.swift.org/package-manager"><img src="https://img.shields.io/badge/Swift_Package_Manager-compatible-orange?style=flat" alt="Swift Package Manager"></a></p>
+<h2 id='features' class='heading'>Features</h2>
+
+<p>PagedMediaViewer is an elegant media display library, comparable to native Photos app, supporting both images and videos.</p>
+
+<ul>
+<li>[x] Features smooth transition effects when expanding from thumbnail to fullscreen mode, with seamless return animation to the original position upon closure.</li>
+<li>[x] Supports any custom media view which conforms to <code><a href="Protocols/PagedMediaItem.html">PagedMediaItem</a></code>, allowing for flexible integration of various media types.</li>
+<li>[x] Completely configurable header, footer, and playback controls.</li>
+<li>[x] Optimized zoom functionality with automatic UI elements hiding during zoom interactions.</li>
+<li>[x] Offers adjustable presentation view insets to ensure fullscreen transitions do not overlap with other UI elements (e.g. promotional content).</li>
+<li>[x] <a href="https://sukov.github.io/PagedMediaViewer/">Complete Documentation</a></li>
+</ul>
+<h2 id='demo' class='heading'>Demo</h2>
+
+<p>To run the example project, clone the repo, and run <code>pod install</code> from the Example directory first.</p>
+<h2 id='usage' class='heading'>Usage</h2>
+
+<p>Check <a href="Example/PagedMediaViewer/PagedMediaViewControllerExample.swift">PagedMediaViewControllerExample.swift</a> <code><a href="Protocols/PagedMediaDataSource.html">PagedMediaDataSource</a></code> and <code><a href="Protocols/PagedMediaDelegate.html">PagedMediaDelegate</a></code> implementation from the Example project.</p>
+<h2 id='requirements' class='heading'>Requirements</h2>
+
+<ul>
+<li>iOS 13.0+</li>
+<li>Xcode 12.0+</li>
+<li>Swift 5.0+</li>
+</ul>
+<h2 id='installation' class='heading'>Installation</h2>
+<h3 id='cocoapods' class='heading'>CocoaPods</h3>
+
+<p><a href="http://cocoapods.org">CocoaPods</a> is a dependency manager for Cocoa projects. You can install it with the following command:</p>
+<pre class="highlight shell"><code><span class="nv">$ </span>gem <span class="nb">install </span>cocoapods
+</code></pre>
+
+<p>To integrate PagedMediaViewer into your Xcode project using CocoaPods, specify it in your <code>Podfile</code>:</p>
+<pre class="highlight ruby"><code><span class="n">source</span> <span class="s1">'https://github.com/CocoaPods/Specs.git'</span>
+<span class="n">platform</span> <span class="ss">:ios</span><span class="p">,</span> <span class="s1">'13.0'</span>
+<span class="n">use_frameworks!</span>
+
+<span class="n">target</span> <span class="s1">'&lt;Your Target Name&gt;'</span> <span class="k">do</span>
+    <span class="n">pod</span> <span class="s1">'PagedMediaViewer'</span>
+<span class="k">end</span>
+</code></pre>
+<h3 id='swift-package-manager' class='heading'>Swift Package Manager</h3>
+
+<p>The <a href="https://swift.org/package-manager/">Swift Package Manager</a> is a tool for automating the distribution of Swift code and is integrated into the <code>swift</code> compiler. </p>
+
+<p>Once you have your Swift package set up, adding <code>PagedMediaViewer</code> as a dependency is as easy as adding it to the <code>dependencies</code> value of your <code>Package.swift</code>.</p>
+<pre class="highlight swift"><code><span class="nv">dependencies</span><span class="p">:</span> <span class="p">[</span>
+    <span class="o">.</span><span class="nf">package</span><span class="p">(</span><span class="nv">url</span><span class="p">:</span> <span class="s">"https://github.com/sukov/PagedMediaViewer.git"</span><span class="p">,</span> <span class="nv">from</span><span class="p">:</span> <span class="s">"1.0.0"</span><span class="p">)</span>
+<span class="p">]</span>
+</code></pre>
+<h2 id='author' class='heading'>Author</h2>
+
+<p>sukov, <a href="mailto:gorjan.shukov@gmail.com">gorjan.shukov@gmail.com</a></p>
+<h2 id='license' class='heading'>License</h2>
+
+<p>PagedMediaViewer is available under the MIT license. See the LICENSE file for more info.</p>
+
+          </div>
+        </section>
+
+
+      </article>
+    </div>
+    <section class="footer">
+      <p>&copy; 2025 <a class="link" href="https://github.com/sukov/PagedMediaViewer" target="_blank" rel="external noopener">Gorjan Shukov</a>. All rights reserved. (Last updated: 2025-09-22)</p>
+      <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.15.3</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
+    </section>
+  </body>
+</html>
