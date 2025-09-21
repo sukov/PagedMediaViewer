@@ -11,13 +11,13 @@ public protocol PagedMediaItem: UIView {
     var paused: Bool { get set }
     /// Whether the item is animated (video, gif, etc) or static (image, etc).
     var isAnimated: Bool { get }
-    /// Used in the last part of the dismissal transition for animated items if not nil.
+    /// Used in the last part of the dismissal transition for animated items (if not `nil`) for smooth effect. Defaults to `nil`.
     var animatedItemSnapshotAtCurrentTime: UIImage? { get }
-    /// Controls for play/pause and scrubbing
+    /// Controls for play/pause and scrubbing.  Defaults to `nil`.
     var animatedItemControlsView: UIView? { get }
 }
 
 public extension PagedMediaItem {
-    var animatedItemSnapshotAtCurrentTime: UIImage? { self.snapshotImage() }
+    var animatedItemSnapshotAtCurrentTime: UIImage? { nil }
     var animatedItemControlsView: UIView? { nil }
 }

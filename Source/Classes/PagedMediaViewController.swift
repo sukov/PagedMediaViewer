@@ -58,10 +58,11 @@ open class PagedMediaViewController: UIPageViewController {
         currentViewController?.index ?? 0
     }
 
+    /// Hidden status bar when header/footer are hidden.
     public override var prefersStatusBarHidden: Bool {
         isHeaderFooterHidden
     }
-
+    /// Light content status bar style.
     public override var preferredStatusBarStyle: UIStatusBarStyle {
         .lightContent
     }
@@ -83,6 +84,7 @@ open class PagedMediaViewController: UIPageViewController {
         pagedMediaDataSource?.presentationViewInsets(for: self) ?? .zero
     }
 
+    /// Initializes the paged media view controller with the given initial index of the media item.
     public init(initialIndex: Int) {
         self.initialIndex = initialIndex
         super.init(transitionStyle: .scroll, navigationOrientation: .horizontal, options: pageOptions)
@@ -92,6 +94,7 @@ open class PagedMediaViewController: UIPageViewController {
         modalPresentationCapturesStatusBarAppearance = true
     }
 
+    /// Not implemented.
     public required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
