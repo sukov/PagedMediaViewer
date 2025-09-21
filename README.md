@@ -18,8 +18,11 @@ PagedMediaViewer is an elegant media display library, comparable to native Photo
   - [x] [Complete Documentation](https://sukov.github.io/PagedMediaViewer/)
 
 ## Demo
+| Image transition | Video transition & zoom | Media items pagination |
+|:---:|:---:|:---:|
+|![1](https://github.com/user-attachments/assets/233f6227-7f1e-425a-8709-d6489281f35d)|![2](https://github.com/user-attachments/assets/936afb3a-9b76-4350-87ee-2d41106a350c)|![3](https://github.com/user-attachments/assets/2615ed42-f788-437a-8d5e-920a51597f02)|
 
-To run the example project, clone the repo, and run `pod install` from the Example directory first.
+The previews are from the example project. To run the example project, clone the repo, and run `pod install` from the Example directory first.
 
 ## Usage 
 
