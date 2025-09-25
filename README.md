@@ -10,14 +10,15 @@
 
 PagedMediaViewer is an elegant media display library, comparable to native Photos app, supporting both images and videos.
 
-  - [x] Features smooth transition effects when expanding from thumbnail to fullscreen mode, with seamless return animation to the original position upon closure.
-  - [x] Supports any custom media view which conforms to `PagedMediaItem`, allowing for flexible integration of various media types.
-  - [x] Completely configurable header, footer, and playback controls.
-  - [x] Optimized zoom functionality with automatic UI elements hiding during zoom interactions.
-  - [x] Offers adjustable presentation view insets to ensure fullscreen transitions do not overlap with other UI elements (e.g. promotional content).
+  - [x] Smooth thumbnail-to-fullscreen interactive transition with return animation
+  - [x] Fullscreen display of any custom (media) view conforming to `PagedMediaItem` protocol
+  - [x] Configurable header, footer, and playback controls
+  - [x] Double tap & pinch to zoom with auto-hiding UI elements
+  - [x] Adjustable presentation insets to allow underlying views to remain visible (e.g. promotional content)
   - [x] [Complete Documentation](https://sukov.github.io/PagedMediaViewer/)
 
 ## Demo
+
 | Image transition | Video transition & zoom | Media items pagination |
 |:---:|:---:|:---:|
 |![1](https://github.com/user-attachments/assets/233f6227-7f1e-425a-8709-d6489281f35d)|![2](https://github.com/user-attachments/assets/936afb3a-9b76-4350-87ee-2d41106a350c)|![3](https://github.com/user-attachments/assets/2615ed42-f788-437a-8d5e-920a51597f02)|
@@ -26,8 +27,44 @@ The previews are from the example project. To run the example project, clone the
 
 ## Usage 
 
+### Quick Start
 Check [PagedMediaViewControllerExample.swift](Example/PagedMediaViewer/PagedMediaViewControllerExample.swift) `PagedMediaDataSource` and `PagedMediaDelegate` implementation from the Example project.
 
+### PagedMediaDataSource protocol
+
+Conform to `PagedMediaDataSource` to provide media items and customize their presentation.
+
+```Swift
+public protocol PagedMediaDataSource: AnyObject {
+    /// Number of items to be presented.
+    func numberOfItems(in pagedMediaViewController: PagedMediaViewController) -> Int
+    /// Adds insets  on `PagedMediaViewController`'s view presentation frame. Defaults to `.zero`. Useful for preventing presentation over promotional content.
+    func presentationViewInsets(for pagedMediaViewController: PagedMediaViewController) -> UIEdgeInsets
+    /// Provides the media item view for the given index.
+    func pagedMediaViewController(_ pagedMediaViewController: PagedMediaViewController, pagedMediaViewForItemAt index: Int) -> PagedMediaItem
+    /// Provides the original view for the given index. Used for transition animations.
+    func pagedMediaViewController(_ pagedMediaViewController: PagedMediaViewController, originalViewForItemAt index: Int) -> UIView
+    /// Optional method for specifying the original image for the view or a snapshot. By default `PagedMediaTransitionDriver` will create a snapshot from the original view.
+    func pagedMediaViewController(_ pagedMediaViewController: PagedMediaViewController, transitionImageForItemAt index: Int) -> UIImage?
+}
+```
+
+### PagedMediaDelegate protocol
+
+Optional: Conform to `PagedMediaDelegate` for transition and item change events.
+
+```Swift
+public protocol PagedMediaDelegate: AnyObject {
+    /// Called just before the transition to a new item begins. Useful for centering table/collection view items behind the scenes for proper transition animation.
+    func pagedMediaViewController(_ pagedMediaViewController: PagedMediaViewController, willTransitionTo index: Int)
+    /// Called after the transition to a new item is completed.
+    func pagedMediaViewController(_ pagedMediaViewController: PagedMediaViewController, didTransitionTo toIndex: Int, fromIndex: Int)
+    /// Called just before the transition ends. Perfect time to unpause the original view at index.
+    func pagedMediaViewController(_ pagedMediaViewController: PagedMediaViewController,
+                                     willDismissToOriginalViewAt index: Int,
+                                     fromPagedMediaItem mediaItem: PagedMediaItem)
+}
+```
 
 ## Requirements
 
@@ -56,6 +93,12 @@ use_frameworks!
 target '<Your Target Name>' do
     pod 'PagedMediaViewer'
 end
+```
+
+Then, run the following command:
+
+```bash
+$ pod install
 ```
 
 ### Swift Package Manager
