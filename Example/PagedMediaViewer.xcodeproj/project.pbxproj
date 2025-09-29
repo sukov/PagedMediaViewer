@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 46;
+	objectVersion = 77;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -15,7 +15,18 @@
 		6DD1AC6A2E7A0A2C006B49ED /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DD1AC692E7A0A28006B49ED /* SceneDelegate.swift */; };
 		6DD2D5E62E70D9AA0074652A /* PagedMediaCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DD2D5E42E70D9AA0074652A /* PagedMediaCell.swift */; };
 		6DD2D5E72E70D9AA0074652A /* PagedMediaViewControllerExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DD2D5E52E70D9AA0074652A /* PagedMediaViewControllerExample.swift */; };
+		B2613BDDF3E9A4C9E2CA05BC /* Pods_PagedMediaViewerTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C06C95AF6CCE3DBE2A44E523 /* Pods_PagedMediaViewerTests.framework */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		6DD21EFA2E85C7E90039C81E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 607FACC81AFB9204008FA782 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 607FACCF1AFB9204008FA782;
+			remoteInfo = PagedMediaViewer_Example;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		0BF335622BB49D5C298ACE1A /* PagedMediaViewer.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = PagedMediaViewer.podspec; path = ../PagedMediaViewer.podspec; sourceTree = "<group>"; };
@@ -30,13 +41,27 @@
 		607FACDF1AFB9204008FA782 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		6DC25AEB2E7C84BE00DA6165 /* MediaView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaView.swift; sourceTree = "<group>"; };
 		6DD1AC692E7A0A28006B49ED /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		6DD21EF62E85C7E90039C81E /* PagedMediaViewerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PagedMediaViewerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6DD2D5E42E70D9AA0074652A /* PagedMediaCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PagedMediaCell.swift; sourceTree = "<group>"; };
 		6DD2D5E52E70D9AA0074652A /* PagedMediaViewControllerExample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PagedMediaViewControllerExample.swift; sourceTree = "<group>"; };
 		786B4A79573CEB0644467FEC /* Pods-PagedMediaViewer_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PagedMediaViewer_Tests.debug.xcconfig"; path = "Target Support Files/Pods-PagedMediaViewer_Tests/Pods-PagedMediaViewer_Tests.debug.xcconfig"; sourceTree = "<group>"; };
+		90A2D7AE2ADEE4063E2E908C /* Pods-PagedMediaViewerTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PagedMediaViewerTests.debug.xcconfig"; path = "Target Support Files/Pods-PagedMediaViewerTests/Pods-PagedMediaViewerTests.debug.xcconfig"; sourceTree = "<group>"; };
 		AD501AFB9E1214E9E25CD8A5 /* Pods-PagedMediaViewer_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PagedMediaViewer_Example.debug.xcconfig"; path = "Target Support Files/Pods-PagedMediaViewer_Example/Pods-PagedMediaViewer_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		B56F59043A05B158EA5C88B1 /* Pods-PagedMediaViewer_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PagedMediaViewer_Example.release.xcconfig"; path = "Target Support Files/Pods-PagedMediaViewer_Example/Pods-PagedMediaViewer_Example.release.xcconfig"; sourceTree = "<group>"; };
+		C06C95AF6CCE3DBE2A44E523 /* Pods_PagedMediaViewerTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PagedMediaViewerTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		DF70624B126C7792E5E6B9E7 /* Pods-PagedMediaViewerTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PagedMediaViewerTests.release.xcconfig"; path = "Target Support Files/Pods-PagedMediaViewerTests/Pods-PagedMediaViewerTests.release.xcconfig"; sourceTree = "<group>"; };
 		EA125A047777AD4AC090B5D8 /* Pods_PagedMediaViewer_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PagedMediaViewer_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		6DD21EF72E85C7E90039C81E /* PagedMediaViewerTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+			);
+			path = PagedMediaViewerTests;
+			sourceTree = "<group>";
+		};
+/* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		607FACCD1AFB9204008FA782 /* Frameworks */ = {
@@ -44,6 +69,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				683003A02CE67346C4A8C414 /* Pods_PagedMediaViewer_Example.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6DD21EF32E85C7E90039C81E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B2613BDDF3E9A4C9E2CA05BC /* Pods_PagedMediaViewerTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -55,6 +88,7 @@
 			children = (
 				607FACF51AFB993E008FA782 /* Podspec Metadata */,
 				607FACD21AFB9204008FA782 /* Example for PagedMediaViewer */,
+				6DD21EF72E85C7E90039C81E /* PagedMediaViewerTests */,
 				607FACD11AFB9204008FA782 /* Products */,
 				ABE3BF0487FFCAC2A8D0359D /* Pods */,
 				616F396BD061E9260383394F /* Frameworks */,
@@ -65,6 +99,7 @@
 			isa = PBXGroup;
 			children = (
 				607FACD01AFB9204008FA782 /* PagedMediaViewer_Example.app */,
+				6DD21EF62E85C7E90039C81E /* PagedMediaViewerTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -108,6 +143,7 @@
 			children = (
 				EA125A047777AD4AC090B5D8 /* Pods_PagedMediaViewer_Example.framework */,
 				483848A16CA0221C292A188F /* Pods_PagedMediaViewer_Tests.framework */,
+				C06C95AF6CCE3DBE2A44E523 /* Pods_PagedMediaViewerTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -119,6 +155,8 @@
 				B56F59043A05B158EA5C88B1 /* Pods-PagedMediaViewer_Example.release.xcconfig */,
 				786B4A79573CEB0644467FEC /* Pods-PagedMediaViewer_Tests.debug.xcconfig */,
 				50527BF22FDD3F040538F11F /* Pods-PagedMediaViewer_Tests.release.xcconfig */,
+				90A2D7AE2ADEE4063E2E908C /* Pods-PagedMediaViewerTests.debug.xcconfig */,
+				DF70624B126C7792E5E6B9E7 /* Pods-PagedMediaViewerTests.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -145,13 +183,35 @@
 			productReference = 607FACD01AFB9204008FA782 /* PagedMediaViewer_Example.app */;
 			productType = "com.apple.product-type.application";
 		};
+		6DD21EF52E85C7E90039C81E /* PagedMediaViewerTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6DD21EFE2E85C7E90039C81E /* Build configuration list for PBXNativeTarget "PagedMediaViewerTests" */;
+			buildPhases = (
+				7E24162FE5AE9920323DCC23 /* [CP] Check Pods Manifest.lock */,
+				6DD21EF22E85C7E90039C81E /* Sources */,
+				6DD21EF32E85C7E90039C81E /* Frameworks */,
+				6DD21EF42E85C7E90039C81E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				6DD21EFB2E85C7E90039C81E /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				6DD21EF72E85C7E90039C81E /* PagedMediaViewerTests */,
+			);
+			name = PagedMediaViewerTests;
+			productName = PagedMediaViewerTests;
+			productReference = 6DD21EF62E85C7E90039C81E /* PagedMediaViewerTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
 		607FACC81AFB9204008FA782 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0830;
+				LastSwiftUpdateCheck = 1620;
 				LastUpgradeCheck = 0830;
 				ORGANIZATIONNAME = CocoaPods;
 				TargetAttributes = {
@@ -160,10 +220,13 @@
 						DevelopmentTeam = KFR638643H;
 						LastSwiftMigration = 0900;
 					};
+					6DD21EF52E85C7E90039C81E = {
+						CreatedOnToolsVersion = 16.2;
+						TestTargetID = 607FACCF1AFB9204008FA782;
+					};
 				};
 			};
 			buildConfigurationList = 607FACCB1AFB9204008FA782 /* Build configuration list for PBXProject "PagedMediaViewer" */;
-			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -172,11 +235,13 @@
 				Base,
 			);
 			mainGroup = 607FACC71AFB9204008FA782;
+			preferredProjectObjectVersion = 77;
 			productRefGroup = 607FACD11AFB9204008FA782 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
 				607FACCF1AFB9204008FA782 /* PagedMediaViewer_Example */,
+				6DD21EF52E85C7E90039C81E /* PagedMediaViewerTests */,
 			);
 		};
 /* End PBXProject section */
@@ -191,6 +256,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		6DD21EF42E85C7E90039C81E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
@@ -199,13 +271,12 @@
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-PagedMediaViewer_Example/Pods-PagedMediaViewer_Example-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/PagedMediaViewer/PagedMediaViewer.framework",
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-PagedMediaViewer_Example/Pods-PagedMediaViewer_Example-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PagedMediaViewer.framework",
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-PagedMediaViewer_Example/Pods-PagedMediaViewer_Example-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -234,6 +305,28 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		7E24162FE5AE9920323DCC23 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-PagedMediaViewerTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -249,7 +342,22 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		6DD21EF22E85C7E90039C81E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		6DD21EFB2E85C7E90039C81E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 607FACCF1AFB9204008FA782 /* PagedMediaViewer_Example */;
+			targetProxy = 6DD21EFA2E85C7E90039C81E /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		607FACDE1AFB9204008FA782 /* LaunchScreen.xib */ = {
@@ -357,7 +465,8 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -370,7 +479,10 @@
 				DEVELOPMENT_TEAM = KFR638643H;
 				INFOPLIST_FILE = PagedMediaViewer/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				MODULE_NAME = ExampleApp;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.$(PRODUCT_NAME:rfc1034identifier)";
 				"PRODUCT_BUNDLE_IDENTIFIER[sdk=iphoneos*]" = "org.cocoapods.demo.PagedMediaViewer-Example";
@@ -388,13 +500,87 @@
 				DEVELOPMENT_TEAM = KFR638643H;
 				INFOPLIST_FILE = PagedMediaViewer/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				MODULE_NAME = ExampleApp;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.$(PRODUCT_NAME:rfc1034identifier)";
 				"PRODUCT_BUNDLE_IDENTIFIER[sdk=iphoneos*]" = "org.cocoapods.demo.PagedMediaViewer-Example";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		6DD21EFC2E85C7E90039C81E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 90A2D7AE2ADEE4063E2E908C /* Pods-PagedMediaViewerTests.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = KFR638643H;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.gshukov.PagedMediaViewerTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PagedMediaViewer_Example.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/PagedMediaViewer_Example";
+			};
+			name = Debug;
+		};
+		6DD21EFD2E85C7E90039C81E /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = DF70624B126C7792E5E6B9E7 /* Pods-PagedMediaViewerTests.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = KFR638643H;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.gshukov.PagedMediaViewerTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PagedMediaViewer_Example.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/PagedMediaViewer_Example";
 			};
 			name = Release;
 		};
@@ -415,6 +601,15 @@
 			buildConfigurations = (
 				607FACF01AFB9204008FA782 /* Debug */,
 				607FACF11AFB9204008FA782 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		6DD21EFE2E85C7E90039C81E /* Build configuration list for PBXNativeTarget "PagedMediaViewerTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6DD21EFC2E85C7E90039C81E /* Debug */,
+				6DD21EFD2E85C7E90039C81E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

@@ -4,4 +4,8 @@ platform :ios, '13.0'
 
 target 'PagedMediaViewer_Example' do
   pod 'PagedMediaViewer', :path => '../'
+
+  target 'PagedMediaViewerTests' do
+    inherit! :search_paths
+  end
 end
