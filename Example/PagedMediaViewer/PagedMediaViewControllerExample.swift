@@ -91,7 +91,7 @@ class PagedMediaViewControllerExample: UICollectionViewController, UICollectionV
         vc.pagedMediaDataSource = self
         vc.pagedMediaDelegate = self
         vc.view.backgroundColor = .black
-        setupCarouselFooterHeader(for: vc)
+        setupFooterHeader(for: vc)
         present(vc, animated: true)
     }
 
@@ -171,7 +171,7 @@ extension PagedMediaViewControllerExample: PagedMediaDelegate {
 
 // MARK: Custom header and footer for PagedMediaViewController
 extension PagedMediaViewControllerExample {
-    private func setupCarouselFooterHeader(for vc: PagedMediaViewController) {
+    private func setupFooterHeader(for vc: PagedMediaViewController) {
         // Footer
         let footerStackView = {
             let stackView = UIStackView()
