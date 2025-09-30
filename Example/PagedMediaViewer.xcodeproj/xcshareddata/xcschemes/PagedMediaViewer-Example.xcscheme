@@ -52,13 +52,24 @@
       </MacroExpansion>
       <Testables>
          <TestableReference
-            skipped = "NO"
+            skipped = "YES"
             parallelizable = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "6DD21EF52E85C7E90039C81E"
                BuildableName = "PagedMediaViewerTests.xctest"
                BlueprintName = "PagedMediaViewerTests"
+               ReferencedContainer = "container:PagedMediaViewer.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO"
+            parallelizable = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "6DD261962E8C6F71006FEC93"
+               BuildableName = "PagedMediaViewerUITests.xctest"
+               BlueprintName = "PagedMediaViewerUITests"
                ReferencedContainer = "container:PagedMediaViewer.xcodeproj">
             </BuildableReference>
          </TestableReference>

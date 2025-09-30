@@ -90,6 +90,7 @@ class PagedMediaViewControllerExample: UICollectionViewController, UICollectionV
         let vc = PagedMediaViewController(initialIndex: indexPath.item)
         vc.pagedMediaDataSource = self
         vc.pagedMediaDelegate = self
+        vc.view.accessibilityIdentifier = "pagedMediaViewController" // for UI tests
         vc.view.backgroundColor = .black
         setupFooterHeader(for: vc)
         present(vc, animated: true)
@@ -212,6 +213,7 @@ extension PagedMediaViewControllerExample {
 
         // Header
         let closeButton = UIButton()
+        closeButton.accessibilityIdentifier = "closeButton"
         closeButton.tintColor = .white
         closeButton.setImage(UIImage(systemName: "xmark"), for: .normal)
         closeButton.addTarget(self, action: #selector(closeButtonTapped), for: .touchUpInside)

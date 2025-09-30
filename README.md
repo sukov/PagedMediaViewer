@@ -15,7 +15,7 @@ PagedMediaViewer is an elegant media display library, comparable to native Photo
   - [x] Configurable header, footer, and playback controls
   - [x] Double tap & pinch to zoom with auto-hiding UI elements
   - [x] Adjustable presentation insets to allow underlying views to remain visible (e.g. promotional content)
-  - [x] Comprehensive Unit Test Coverage
+  - [x] Comprehensive Unit & UI Test Coverage
   - [x] [Complete Documentation](https://sukov.github.io/PagedMediaViewer/)
 
 ## Demo
