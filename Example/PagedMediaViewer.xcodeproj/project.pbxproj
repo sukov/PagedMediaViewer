@@ -36,7 +36,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		0BF335622BB49D5C298ACE1A /* PagedMediaViewer.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = PagedMediaViewer.podspec; path = ../PagedMediaViewer.podspec; sourceTree = "<group>"; };
+		0BF335622BB49D5C298ACE1A /* PagedMediaViewer.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = PagedMediaViewer.podspec; path = ../PagedMediaViewer.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		30C702B2B1749E206A73E7E7 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		390E5F817EE52AA3925A4A77 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 		483848A16CA0221C292A188F /* Pods_PagedMediaViewer_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PagedMediaViewer_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
