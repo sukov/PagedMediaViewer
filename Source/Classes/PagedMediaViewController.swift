@@ -5,6 +5,8 @@
 //  Created by Gorjan Shukov on 09/15/2025.
 //
 
+import UIKit
+
 /// Data source for providing media items and original views for transition animations.
 public protocol PagedMediaDataSource: AnyObject {
     /// Number of items to be presented.

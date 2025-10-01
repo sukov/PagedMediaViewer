@@ -5,6 +5,8 @@
 //  Created by Gorjan Shukov on 20.9.25.
 //
 
+import UIKit
+
 /// Media item to be presented in the PagedMediaViewController.
 public protocol PagedMediaItem: UIView {
     /// Updates paused state depending on the transition status.

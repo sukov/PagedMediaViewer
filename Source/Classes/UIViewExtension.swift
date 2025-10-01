@@ -5,6 +5,8 @@
 //  Created by Gorjan Shukov on 09/15/2025.
 //
 
+import UIKit
+
 extension UIView {
     func snapshotImage() -> UIImage? {
         let renderer = UIGraphicsImageRenderer(size: bounds.size)
