@@ -20,7 +20,7 @@
     <header class="header">
       <p class="header-col header-col--primary">
         <a class="header-link" href="index.html">
-          PagedMediaViewer 1.0.0 Docs
+          PagedMediaViewer 1.0.3 Docs
         </a>
          (87% documented)
       </p>
@@ -86,7 +86,7 @@
 
 <p><a href="https://cocoapods.org/pods/PagedMediaViewer"><img src="https://img.shields.io/cocoapods/v/PagedMediaViewer.svg?style=flat" alt="Version"></a>
 <a href="https://cocoapods.org/pods/PagedMediaViewer"><img src="https://img.shields.io/cocoapods/l/PagedMediaViewer.svg?style=flat" alt="License"></a>
-<a href="https://swift.org"><img src="https://img.shields.io/badge/Language-Swift%205.0-orange.svg?style=flat" alt="Language Swift"></a>
+<a href="https://swift.org"><img src="https://img.shields.io/badge/Language-Swift%205.5_6.2-orange.svg?style=flat" alt="Language Swift"></a>
 <a href="https://cocoapods.org/pods/PagedMediaViewer"><img src="https://img.shields.io/cocoapods/p/PagedMediaViewer.svg?style=flat" alt="Platform"></a>
 <a href="https://www.swift.org/package-manager"><img src="https://img.shields.io/badge/Swift_Package_Manager-compatible-orange?style=flat" alt="Swift Package Manager"></a></p>
 <h2 id='features' class='heading'>Features</h2>
@@ -94,25 +94,85 @@
 <p>PagedMediaViewer is an elegant media display library, comparable to native Photos app, supporting both images and videos.</p>
 
 <ul>
-<li>[x] Features smooth transition effects when expanding from thumbnail to fullscreen mode, with seamless return animation to the original position upon closure.</li>
-<li>[x] Supports any custom media view which conforms to <code><a href="Protocols/PagedMediaItem.html">PagedMediaItem</a></code>, allowing for flexible integration of various media types.</li>
-<li>[x] Completely configurable header, footer, and playback controls.</li>
-<li>[x] Optimized zoom functionality with automatic UI elements hiding during zoom interactions.</li>
-<li>[x] Offers adjustable presentation view insets to ensure fullscreen transitions do not overlap with other UI elements (e.g. promotional content).</li>
+<li>[x] Smooth thumbnail-to-fullscreen interactive transition with return animation</li>
+<li>[x] Fullscreen display of any custom (media) view conforming to <code><a href="Protocols/PagedMediaItem.html">PagedMediaItem</a></code> protocol</li>
+<li>[x] Configurable header, footer, and playback controls</li>
+<li>[x] Double tap &amp; pinch to zoom with auto-hiding UI elements</li>
+<li>[x] Adjustable presentation insets to allow underlying views to remain visible (e.g. promotional content)</li>
+<li>[x] Comprehensive Unit &amp; UI Test Coverage</li>
 <li>[x] <a href="https://sukov.github.io/PagedMediaViewer/">Complete Documentation</a></li>
 </ul>
 <h2 id='demo' class='heading'>Demo</h2>
 
-<p>To run the example project, clone the repo, and run <code>pod install</code> from the Example directory first.</p>
+<table><thead>
+<tr>
+<th style="text-align: center">Image transition</th>
+<th style="text-align: center">Video transition &amp; zoom</th>
+<th style="text-align: center">Media items pagination</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: center"><img src="https://github.com/user-attachments/assets/233f6227-7f1e-425a-8709-d6489281f35d" alt="1"></td>
+<td style="text-align: center"><img src="https://github.com/user-attachments/assets/936afb3a-9b76-4350-87ee-2d41106a350c" alt="2"></td>
+<td style="text-align: center"><img src="https://github.com/user-attachments/assets/2615ed42-f788-437a-8d5e-920a51597f02" alt="3"></td>
+</tr>
+</tbody></table>
+
+<p>The previews are from the example project. To run the example project, clone the repo, and run <code>pod install</code> from the Example directory first.</p>
 <h2 id='usage' class='heading'>Usage</h2>
+<h3 id='quick-start' class='heading'>Quick Start</h3>
 
 <p>Check <a href="Example/PagedMediaViewer/PagedMediaViewControllerExample.swift">PagedMediaViewControllerExample.swift</a> <code><a href="Protocols/PagedMediaDataSource.html">PagedMediaDataSource</a></code> and <code><a href="Protocols/PagedMediaDelegate.html">PagedMediaDelegate</a></code> implementation from the Example project.</p>
+<h3 id='pagedmediaitem-protocol' class='heading'>PagedMediaItem protocol</h3>
+
+<p>Media item to be presented in the PagedMediaViewController.</p>
+<pre class="highlight plaintext"><code>public protocol PagedMediaItem: UIView {
+    /// Updates paused state depending on the transition status.
+    var paused: Bool { get set }
+    /// Whether the item is animated (video, gif, etc) or static (image, etc).
+    var isAnimated: Bool { get }
+    /// Used in the last part of the dismissal transition for animated items (if not `nil`) for smooth effect. Defaults to `nil`.
+    var animatedItemSnapshotAtCurrentTime: UIImage? { get }
+    /// Controls for play/pause and scrubbing.  Defaults to `nil`.
+    var animatedItemControlsView: UIView? { get }
+}
+</code></pre>
+<h3 id='pagedmediadatasource-protocol' class='heading'>PagedMediaDataSource protocol</h3>
+
+<p>Conform to <code><a href="Protocols/PagedMediaDataSource.html">PagedMediaDataSource</a></code> to provide media items and customize their presentation.</p>
+<pre class="highlight plaintext"><code>public protocol PagedMediaDataSource: AnyObject {
+    /// Number of items to be presented.
+    func numberOfItems(in pagedMediaViewController: PagedMediaViewController) -&gt; Int
+    /// Adds insets  on `PagedMediaViewController`'s view presentation frame. Defaults to `.zero`. Useful for preventing presentation over promotional content.
+    func presentationViewInsets(for pagedMediaViewController: PagedMediaViewController) -&gt; UIEdgeInsets
+    /// Provides the media item view for the given index.
+    func pagedMediaViewController(_ pagedMediaViewController: PagedMediaViewController, pagedMediaViewForItemAt index: Int) -&gt; PagedMediaItem
+    /// Provides the original view for the given index. Used for transition animations.
+    func pagedMediaViewController(_ pagedMediaViewController: PagedMediaViewController, originalViewForItemAt index: Int) -&gt; UIView
+    /// Optional method for specifying the original image for the view or a snapshot. By default `PagedMediaTransitionDriver` will create a snapshot from the original view.
+    func pagedMediaViewController(_ pagedMediaViewController: PagedMediaViewController, transitionImageForItemAt index: Int) -&gt; UIImage?
+}
+</code></pre>
+<h3 id='pagedmediadelegate-protocol' class='heading'>PagedMediaDelegate protocol</h3>
+
+<p>Optional: Conform to <code><a href="Protocols/PagedMediaDelegate.html">PagedMediaDelegate</a></code> for transition and item change events.</p>
+<pre class="highlight plaintext"><code>public protocol PagedMediaDelegate: AnyObject {
+    /// Called just before the transition to a new item begins. Useful for centering table/collection view items behind the scenes for proper transition animation.
+    func pagedMediaViewController(_ pagedMediaViewController: PagedMediaViewController, willTransitionTo index: Int)
+    /// Called after the transition to a new item is completed.
+    func pagedMediaViewController(_ pagedMediaViewController: PagedMediaViewController, didTransitionTo toIndex: Int, fromIndex: Int)
+    /// Called just before the transition ends. Perfect time to unpause the original view at index.
+    func pagedMediaViewController(_ pagedMediaViewController: PagedMediaViewController,
+                                     willDismissToOriginalViewAt index: Int,
+                                     fromPagedMediaItem mediaItem: PagedMediaItem)
+}
+</code></pre>
 <h2 id='requirements' class='heading'>Requirements</h2>
 
 <ul>
 <li>iOS 13.0+</li>
-<li>Xcode 12.0+</li>
-<li>Swift 5.0+</li>
+<li>Xcode 13.0+</li>
+<li>Swift 5.5+</li>
 </ul>
 <h2 id='installation' class='heading'>Installation</h2>
 <h3 id='cocoapods' class='heading'>CocoaPods</h3>
@@ -130,13 +190,17 @@
     <span class="n">pod</span> <span class="s1">'PagedMediaViewer'</span>
 <span class="k">end</span>
 </code></pre>
+
+<p>Then, run the following command:</p>
+<pre class="highlight shell"><code><span class="nv">$ </span>pod <span class="nb">install</span>
+</code></pre>
 <h3 id='swift-package-manager' class='heading'>Swift Package Manager</h3>
 
 <p>The <a href="https://swift.org/package-manager/">Swift Package Manager</a> is a tool for automating the distribution of Swift code and is integrated into the <code>swift</code> compiler. </p>
 
 <p>Once you have your Swift package set up, adding <code>PagedMediaViewer</code> as a dependency is as easy as adding it to the <code>dependencies</code> value of your <code>Package.swift</code>.</p>
 <pre class="highlight swift"><code><span class="nv">dependencies</span><span class="p">:</span> <span class="p">[</span>
-    <span class="o">.</span><span class="nf">package</span><span class="p">(</span><span class="nv">url</span><span class="p">:</span> <span class="s">"https://github.com/sukov/PagedMediaViewer.git"</span><span class="p">,</span> <span class="nv">from</span><span class="p">:</span> <span class="s">"1.0.0"</span><span class="p">)</span>
+    <span class="o">.</span><span class="nf">package</span><span class="p">(</span><span class="nv">url</span><span class="p">:</span> <span class="s">"https://github.com/sukov/PagedMediaViewer.git"</span><span class="p">,</span> <span class="o">.</span><span class="nf">upToNextMajor</span><span class="p">(</span><span class="nv">from</span><span class="p">:</span> <span class="s">"1.0.3"</span><span class="p">))</span>
 <span class="p">]</span>
 </code></pre>
 <h2 id='author' class='heading'>Author</h2>
@@ -153,7 +217,7 @@
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2025 <a class="link" href="https://github.com/sukov/PagedMediaViewer" target="_blank" rel="external noopener">Gorjan Shukov</a>. All rights reserved. (Last updated: 2025-09-22)</p>
+      <p>&copy; 2025 <a class="link" href="https://github.com/sukov/PagedMediaViewer" target="_blank" rel="external noopener">Gorjan Shukov</a>. All rights reserved. (Last updated: 2025-10-07)</p>
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.15.3</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
     </section>
   </body>
