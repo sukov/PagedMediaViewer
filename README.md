@@ -2,7 +2,7 @@
 
 [![Version](https://img.shields.io/cocoapods/v/PagedMediaViewer.svg?style=flat)](https://cocoapods.org/pods/PagedMediaViewer)
 [![License](https://img.shields.io/cocoapods/l/PagedMediaViewer.svg?style=flat)](https://cocoapods.org/pods/PagedMediaViewer)
-[![Language Swift](https://img.shields.io/badge/Language-Swift%205.0-orange.svg?style=flat)](https://swift.org)
+[![Language Swift](https://img.shields.io/badge/Language-Swift%205.5_6.2-orange.svg?style=flat)](https://swift.org)
 [![Platform](https://img.shields.io/cocoapods/p/PagedMediaViewer.svg?style=flat)](https://cocoapods.org/pods/PagedMediaViewer)
 [![Swift Package Manager](https://img.shields.io/badge/Swift_Package_Manager-compatible-orange?style=flat)](https://www.swift.org/package-manager)
 
@@ -88,8 +88,8 @@ public protocol PagedMediaDelegate: AnyObject {
 ## Requirements
 
 - iOS 13.0+
-- Xcode 12.0+
-- Swift 5.0+
+- Xcode 13.0+
+- Swift 5.5+
 
 
 ## Installation
@@ -128,7 +128,7 @@ Once you have your Swift package set up, adding `PagedMediaViewer` as a dependen
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/sukov/PagedMediaViewer.git", .upToNextMajor(from: "1.0.1"))
+    .package(url: "https://github.com/sukov/PagedMediaViewer.git", .upToNextMajor(from: "1.0.2"))
 ]
 ```
 
