@@ -8,6 +8,7 @@
 import UIKit
 
 /// Data source for providing media items and original views for transition animations.
+@MainActor
 public protocol PagedMediaDataSource: AnyObject {
     /// Number of items to be presented.
     func numberOfItems(in pagedMediaViewController: PagedMediaViewController) -> Int
