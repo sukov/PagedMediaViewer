@@ -46,6 +46,7 @@ final class PagedMediaPresentationController: UIPresentationController {
 
 @MainActor
 final class PagedMediaTransitionController: NSObject {
+    nonisolated
     static let transitionDuration: TimeInterval = 0.3
 
     private var panGestureRecognizer = UIPanGestureRecognizer()

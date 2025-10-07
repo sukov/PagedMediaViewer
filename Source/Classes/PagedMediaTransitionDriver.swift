@@ -34,6 +34,7 @@ class PagedMediaTransitionDriver: NSObject {
 
     // MARK: - Computed Properties
 
+    nonisolated
     private class var animationDuration: TimeInterval {
         PagedMediaTransitionController.transitionDuration
     }

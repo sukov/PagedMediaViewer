@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'PagedMediaViewer'
-  s.version          = '1.0.2'
+  s.version          = '1.0.3'
   s.summary          = 'Elegant media display library, comparable to native Photos app, supporting both images and videos.'
 
   s.homepage         = 'https://github.com/sukov/PagedMediaViewer'
