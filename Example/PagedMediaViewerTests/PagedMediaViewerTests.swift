@@ -148,6 +148,7 @@ class PagedMediaViewerTests: XCTestCase {
         XCTAssertTrue(mediaItem.paused)
     }
 
+    @MainActor
     func testMediaViewControllerZoom() {
         let mediaItem = MockPagedMediaItem()
         let mediaVC = MediaViewController(index: 0, mediaView: mediaItem)

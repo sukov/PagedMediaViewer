@@ -8,6 +8,7 @@
 import UIKit
 import AVKit
 
+@MainActor
 class PagedMediaTransitionDriver: NSObject {
     // MARK: - Properties
 
