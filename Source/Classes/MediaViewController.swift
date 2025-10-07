@@ -8,10 +8,12 @@
 import UIKit
 import AVFoundation
 
+@MainActor
 protocol MediaViewControllerDelegate: AnyObject {
     func mediaViewController(_ mediaViewController: MediaViewController, didZoomToScale zoomedScale: CGFloat, withMinimumScale minScale: CGFloat)
 }
 
+@MainActor
 protocol MediaViewControllerDataSource: AnyObject {
     var visibleAreaEdgeInsets: UIEdgeInsets { get }
     var isControlsViewHidden: Bool { get }

@@ -14,6 +14,7 @@ enum PresentationDirection {
     case none
 }
 
+@MainActor
 final class PagedMediaPresentationController: UIPresentationController {
     override var shouldRemovePresentersView: Bool {
         // We need the view to remain only on presentation in order for the `presentationViewInsets` to be respected.
@@ -43,6 +44,7 @@ final class PagedMediaPresentationController: UIPresentationController {
     }
 }
 
+@MainActor
 final class PagedMediaTransitionController: NSObject {
     static let transitionDuration: TimeInterval = 0.3
 
