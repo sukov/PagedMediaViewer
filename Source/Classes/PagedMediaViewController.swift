@@ -39,6 +39,7 @@ public extension PagedMediaDataSource {
 }
 
 /// Delegate for transition and item change events.
+@MainActor
 public protocol PagedMediaDelegate: AnyObject {
     /// Called just before the transition to a new item begins. Useful for centering table/collection view items behind the scenes for proper transition animation.
     func pagedMediaViewController(_ pagedMediaViewController: PagedMediaViewController, willTransitionTo index: Int)

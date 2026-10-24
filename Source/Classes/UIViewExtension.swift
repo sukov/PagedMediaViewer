@@ -15,4 +15,18 @@ extension UIView {
             self.layer.render(in: context.cgContext)
         }
     }
+
+    var owningViewController: UIViewController? {
+        var responder: UIResponder? = next
+
+        while let current = responder {
+            if let viewController = current as? UIViewController {
+                return viewController
+            }
+
+            responder = current.next
+        }
+
+        return nil
+    }
 }

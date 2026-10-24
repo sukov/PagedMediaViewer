@@ -246,4 +246,66 @@ class PagedMediaViewerTests: XCTestCase {
         XCTAssertEqual(source.frameInWindow.size, CGSize(width: 100, height: 100))
     }
 
+    // MARK: - PagedMediaSourceRegistry
+
+    func testRegistryHasNoSourceForUnrecordedItem() {
+        // Retained by the window, `containerView` is weak
+        let window = UIWindow(frame: CGRect(x: 0, y: 0, width: 320, height: 480))
+        let container = UIView(frame: window.bounds)
+        window.addSubview(container)
+
+        let registry = PagedMediaSourceRegistry()
+        registry.containerView = container
+
+        XCTAssertNotNil(registry.containerView)
+        XCTAssertNil(registry.source(for: AnyHashable("missing")))
+    }
+
+    func testRegistryConvertsRecordedFrameIntoWindowSpace() {
+        let window = UIWindow(frame: CGRect(x: 0, y: 0, width: 320, height: 480))
+        let container = UIView(frame: CGRect(x: 0, y: 100, width: 320, height: 380))
+        window.addSubview(container)
+
+        let registry = PagedMediaSourceRegistry()
+        registry.containerView = container
+        registry.record(AnyHashable("item"), frameInContainer: CGRect(x: 10, y: 20, width: 80, height: 90))
+
+        let source = registry.source(for: AnyHashable("item"))
+
+        XCTAssertEqual(source?.frameInWindow, CGRect(x: 10, y: 120, width: 80, height: 90))
+    }
+
+    func testRegistrySourceHidesAndRevealsItsItem() {
+        let window = UIWindow(frame: CGRect(x: 0, y: 0, width: 320, height: 480))
+        let container = UIView(frame: window.bounds)
+        window.addSubview(container)
+
+        let registry = PagedMediaSourceRegistry()
+        registry.containerView = container
+        registry.record(AnyHashable("item"), frameInContainer: CGRect(x: 0, y: 0, width: 10, height: 10))
+
+        let source = registry.source(for: AnyHashable("item"))
+        XCTAssertNil(registry.hiddenID)
+
+        source?.setHidden(true)
+        XCTAssertEqual(registry.hiddenID, AnyHashable("item"))
+
+        source?.setHidden(false)
+        XCTAssertNil(registry.hiddenID)
+    }
+
+    func testRegistryFallbackSourceIsCenteredInContainer() {
+        let window = UIWindow(frame: CGRect(x: 0, y: 0, width: 320, height: 480))
+        let container = UIView(frame: window.bounds)
+        window.addSubview(container)
+
+        let registry = PagedMediaSourceRegistry()
+        registry.containerView = container
+
+        let frame = registry.fallbackSource().frameInWindow
+
+        XCTAssertEqual(frame.midX, container.bounds.midX)
+        XCTAssertEqual(frame.midY, container.bounds.midY)
+        XCTAssertGreaterThan(frame.width, 0)
+    }
 }
