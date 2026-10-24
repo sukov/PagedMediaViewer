@@ -28,8 +28,8 @@ class PagedMediaTransitionDriver: NSObject {
 
     private let pagedMediaViewController: PagedMediaViewController
     private let currentMediaViewController: MediaViewController
-    private let originalView: UIView
-    private let originalTransitionViews: (fromView: UIView, toView: UIView)
+    private let originalSource: PagedMediaSource
+    private let transitionEndpoints: (from: PagedMediaTransitionEndpoint, to: PagedMediaTransitionEndpoint)
     private let presentationTransitionImage: UIImage?
 
     // MARK: - Computed Properties
@@ -62,12 +62,12 @@ class PagedMediaTransitionDriver: NSObject {
         self.currentMediaViewController = currentMediaVC
 
         // Initialize view properties
-        self.originalView = Self.getOriginalView(
+        self.originalSource = Self.getOriginalSource(
             from: pagedMediaVC,
             at: currentMediaVC.index
         )
-        self.originalTransitionViews = Self.createTransitionViews(
-            originalView: originalView,
+        self.transitionEndpoints = Self.createTransitionEndpoints(
+            originalSource: originalSource,
             currentMediaViewController: currentMediaVC,
             direction: transitionDirection
         )
@@ -140,10 +140,10 @@ class PagedMediaTransitionDriver: NSObject {
     private func setupInitialState() {
         // Set initial alpha values
         if transitionDirection == .presentation {
-            originalTransitionViews.fromView.alpha = 0
+            transitionEndpoints.from.setHidden(true)
             currentMediaViewController.mediaView.alpha = 0
         } else {
-            originalTransitionViews.toView.alpha = 0
+            transitionEndpoints.to.setHidden(true)
         }
 
         pagedMediaViewController.headerViewContainer.alpha = 0
@@ -184,23 +184,23 @@ class PagedMediaTransitionDriver: NSObject {
         return (pagedMediaVC, currentMediaVC)
     }
 
-    private static func getOriginalView(
+    private static func getOriginalSource(
         from pagedMediaVC: PagedMediaViewController,
         at index: Int
-    ) -> UIView {
+    ) -> PagedMediaSource {
         pagedMediaVC.pagedMediaDataSource!
-            .pagedMediaViewController(pagedMediaVC, originalViewForItemAt: index)
+            .pagedMediaViewController(pagedMediaVC, originalSourceForItemAt: index)
     }
 
-    private static func createTransitionViews(
-        originalView: UIView,
+    private static func createTransitionEndpoints(
+        originalSource: PagedMediaSource,
         currentMediaViewController: MediaViewController,
         direction: PresentationDirection
-    ) -> (fromView: UIView, toView: UIView) {
+    ) -> (from: PagedMediaTransitionEndpoint, to: PagedMediaTransitionEndpoint) {
         if direction == .presentation {
-            return (originalView, currentMediaViewController.view)
+            return (.source(originalSource), .view(currentMediaViewController.view))
         } else {
-            return (currentMediaViewController.mediaView, originalView)
+            return (.view(currentMediaViewController.mediaView), .source(originalSource))
         }
     }
 
@@ -256,11 +256,11 @@ class PagedMediaTransitionDriver: NSObject {
 
     private func initialFrameForCurrentTransitionItem() -> CGRect {
         if transitionDirection == .presentation {
-            return originalTransitionViews.fromView.convert(originalTransitionViews.fromView.bounds, to: nil)
+            return transitionEndpoints.from.frameInWindow
         } else {
-            let view = originalTransitionViews.fromView
-            let boundingRect = view.convert(view.bounds, to: nil)
-            let aspectRatio = (view.bounds.size != .zero) ? view.bounds.size : presentationTransitionImage?.size
+            let endpoint = transitionEndpoints.from
+            let boundingRect = endpoint.frameInWindow
+            let aspectRatio = (endpoint.aspectSize != .zero) ? endpoint.aspectSize : presentationTransitionImage?.size
             assert(aspectRatio != nil, "aspectRatio must not be nil. This will result in unexpected transition animation.")
             return AVMakeRect(aspectRatio: aspectRatio ?? CGSize(width: 1, height: 1), insideRect: boundingRect)
         }
@@ -273,12 +273,11 @@ class PagedMediaTransitionDriver: NSObject {
             }
 
             let boundingRect = presentationController.frameOfPresentedViewInContainerView
-            let view = originalTransitionViews.fromView
-            let aspectRatio = presentationTransitionImage?.size ?? view.bounds.size
+            let aspectRatio = presentationTransitionImage?.size ?? transitionEndpoints.from.aspectSize
             assert(aspectRatio != .zero, "aspectRatio must not be zero. This will result in unexpected transition animation.")
             return AVMakeRect(aspectRatio: aspectRatio, insideRect: boundingRect)
         } else {
-            return originalTransitionViews.toView.convert(originalTransitionViews.toView.bounds, to: nil)
+            return transitionEndpoints.to.frameInWindow
         }
     }
 
@@ -305,8 +304,8 @@ class PagedMediaTransitionDriver: NSObject {
 
     private func handleTransitionCompletion(position: UIViewAnimatingPosition) {
         // Reset all view's alpha and remove all transition views
-        originalTransitionViews.fromView.alpha = 1
-        originalTransitionViews.toView.alpha = 1
+        transitionEndpoints.from.setHidden(false)
+        transitionEndpoints.to.setHidden(false)
         currentMediaViewController.mediaView.alpha = 1
         pagedMediaViewController.headerViewContainer.alpha = 1
         pagedMediaViewController.footerViewContainer.alpha = 1
@@ -324,6 +323,10 @@ class PagedMediaTransitionDriver: NSObject {
         } else {
             if position == .end {
                 interactiveItem.mediaView?.removeFromSuperview()
+                pagedMediaViewController.pagedMediaDelegate?.pagedMediaViewController(
+                    pagedMediaViewController,
+                    didDismissToOriginalViewAt: pagedMediaViewController.currentIndex
+                )
             } else if position == .start {
                 currentMediaViewController.attachMediaView()
             }

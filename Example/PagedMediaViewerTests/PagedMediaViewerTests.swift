@@ -84,6 +84,7 @@ class MockMediaViewControllerDataSource: MediaViewControllerDataSource {
 
 // MARK: - Test Cases
 
+@MainActor
 class PagedMediaViewerTests: XCTestCase {
     var pagedMediaViewController: PagedMediaViewController!
     var mockDataSource: MockPagedMediaDataSource!
@@ -216,4 +217,33 @@ class PagedMediaViewerTests: XCTestCase {
         let insets = dataSource.presentationViewInsets(for: pagedMediaVC)
         XCTAssertEqual(insets, .zero)
     }
+
+    // MARK: - PagedMediaSource
+
+    func testSourceFromViewReadsWindowFrameAndTogglesAlpha() {
+        let window = UIWindow(frame: CGRect(x: 0, y: 0, width: 320, height: 480))
+        let view = UIView(frame: CGRect(x: 30, y: 40, width: 100, height: 60))
+        window.addSubview(view)
+
+        let source = PagedMediaSource(view: view)
+
+        XCTAssertEqual(source.frameInWindow, CGRect(x: 30, y: 40, width: 100, height: 60))
+
+        source.setHidden(true)
+        XCTAssertEqual(view.alpha, 0)
+
+        source.setHidden(false)
+        XCTAssertEqual(view.alpha, 1)
+    }
+
+    func testDataSourceDefaultSourceBridgesToOriginalView() {
+        let dataSource = MockPagedMediaDataSource()
+        let pagedMediaVC = PagedMediaViewController(initialIndex: 0)
+
+        let source = dataSource.pagedMediaViewController(pagedMediaVC, originalSourceForItemAt: 0)
+
+        // Mock view is 100x100 and not in a window
+        XCTAssertEqual(source.frameInWindow.size, CGSize(width: 100, height: 100))
+    }
+
 }
