@@ -23,6 +23,9 @@ class PagedMediaTransitionDriver: NSObject {
     private var transitionAnimator: UIViewPropertyAnimator!
     private var headerFooterAnimator: UIViewPropertyAnimator!
     private var tapStealingView: UIView!
+    private var mediaViewClippedToBounds = false
+    private var mediaViewCornerRadius: CGFloat = 0
+    private var mediaViewMaskedCorners: CACornerMask = .allCorners
 
     // MARK: - PagedMediaViewController Properties
 
@@ -126,6 +129,8 @@ class PagedMediaTransitionDriver: NSObject {
 
         let item = PagedMediaTransitionItem(initialFrame: initialFrame)
         item.targetFrame = targetFrame
+        item.initialCornerRadius = transitionEndpoints.from.cornerRadius
+        item.targetCornerRadius = transitionEndpoints.to.cornerRadius
         item.mediaView = createTransitionMediaView(for: item, in: containerView)
         item.headerFooterViews = createHeaderFooterViews(in: containerView)
 
@@ -215,14 +220,21 @@ class PagedMediaTransitionDriver: NSObject {
     private func createTransitionMediaView(for item: PagedMediaTransitionItem, in containerView: UIView) -> UIView {
         if transitionDirection == .presentation {
             let imageView = UIImageView(frame: containerView.convert(item.initialFrame, from: nil))
-            imageView.contentMode = .scaleAspectFit
+            imageView.contentMode = originalSource.contentMode
             imageView.clipsToBounds = true
+            imageView.layer.cornerRadius = item.initialCornerRadius
+            imageView.layer.maskedCorners = originalSource.maskedCorners
             imageView.image = presentationTransitionImage
             containerView.addSubview(imageView)
             return imageView
         } else {
             let mediaView = currentMediaViewController.detachMediaView()
+            mediaViewClippedToBounds = mediaView.clipsToBounds
+            mediaViewCornerRadius = mediaView.layer.cornerRadius
+            mediaViewMaskedCorners = mediaView.layer.maskedCorners
             mediaView.translatesAutoresizingMaskIntoConstraints = true
+            mediaView.clipsToBounds = true
+            mediaView.layer.maskedCorners = originalSource.maskedCorners
             containerView.addSubview(mediaView)
             mediaView.frame = containerView.convert(item.initialFrame, from: nil)
             return mediaView
@@ -328,6 +340,9 @@ class PagedMediaTransitionDriver: NSObject {
                     didDismissToOriginalViewAt: pagedMediaViewController.currentIndex
                 )
             } else if position == .start {
+                currentMediaViewController.mediaView.clipsToBounds = mediaViewClippedToBounds
+                currentMediaViewController.mediaView.layer.cornerRadius = mediaViewCornerRadius
+                currentMediaViewController.mediaView.layer.maskedCorners = mediaViewMaskedCorners
                 currentMediaViewController.attachMediaView()
             }
         }
@@ -419,6 +434,8 @@ class PagedMediaTransitionDriver: NSObject {
             y: mediaView.center.y + centerOffset.y
         )
         mediaView.bounds = CGRect(origin: .zero, size: CGSize(width: itemWidth, height: itemHeight))
+        mediaView.layer.cornerRadius = item.initialCornerRadius
+            + (item.targetCornerRadius - item.initialCornerRadius) * max(0, min(1, itemPercentComplete))
         item.touchOffset = CGVector(dx: scaledOffset.dx, dy: scaledOffset.dy)
     }
 
@@ -439,8 +456,16 @@ class PagedMediaTransitionDriver: NSObject {
 
             let completed = (position == .end)
             transitionAnimatorDidExecuteEndCompletion = completed
-            transitionCompletion(position)
-            self.transitionContext.completeTransition(completed)
+
+            if let itemFrameAnimator, itemFrameAnimator.isRunning {
+                itemFrameAnimator.addCompletion { _ in
+                    transitionCompletion(position)
+                    self.transitionContext.completeTransition(completed)
+                }
+            } else {
+                transitionCompletion(position)
+                self.transitionContext.completeTransition(completed)
+            }
         }
 
         transitionAnimator.addCompletion { [weak self] (position) in
@@ -544,6 +569,7 @@ class PagedMediaTransitionDriver: NSObject {
         itemFrameAnimator.addAnimations {
             guard let item = self.interactiveItem else { return }
             item.mediaView?.frame = (position == .end ? item.targetFrame : item.initialFrame)!
+            item.mediaView?.layer.cornerRadius = (position == .end ? item.targetCornerRadius : item.initialCornerRadius)
         }
 
         itemFrameAnimator.startAnimation()
@@ -576,7 +602,9 @@ class PagedMediaTransitionDriver: NSObject {
     private func continueActiveAnimators(for position: UIViewAnimatingPosition) {
         guard let itemFrameAnimator = itemFrameAnimator else { return }
 
-        let durationFactor: CGFloat = itemFrameAnimator.duration
+        let remainingFraction = transitionAnimator.isReversed ? transitionAnimator.fractionComplete : 1 - transitionAnimator.fractionComplete
+        let remainingDuration = remainingFraction * transitionAnimator.duration
+        let durationFactor = remainingDuration > 0 ? itemFrameAnimator.duration / remainingDuration : 1
         transitionAnimator.continueAnimation(withTimingParameters: nil, durationFactor: durationFactor)
         headerFooterAnimator.continueAnimation(withTimingParameters: nil, durationFactor: durationFactor)
 
@@ -598,6 +626,9 @@ class PagedMediaTransitionDriver: NSObject {
         let snapshotView = UIImageView(image: snapshotImage)
         snapshotView.frame = mediaItem.frame
         snapshotView.contentMode = .scaleAspectFit
+        snapshotView.clipsToBounds = true
+        snapshotView.layer.cornerRadius = mediaItem.layer.cornerRadius
+        snapshotView.layer.maskedCorners = mediaItem.layer.maskedCorners
         transitionContext.containerView.addSubview(snapshotView)
         interactiveItem?.mediaView = snapshotView
         mediaItem.removeFromSuperview()

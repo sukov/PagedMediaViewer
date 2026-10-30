@@ -13,6 +13,8 @@ class PagedMediaTransitionItem: NSObject {
     var mediaView: UIView?
     var headerFooterViews: [UIView] = []
     var touchOffset: CGVector = .zero
+    var initialCornerRadius: CGFloat = 0
+    var targetCornerRadius: CGFloat = 0
     
     init(initialFrame: CGRect) {
         self.initialFrame = initialFrame
