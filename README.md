@@ -158,7 +158,7 @@ Once you have your Swift package set up, adding `PagedMediaViewer` as a dependen
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/sukov/PagedMediaViewer.git", .upToNextMajor(from: "1.0.3"))
+    .package(url: "https://github.com/sukov/PagedMediaViewer.git", .upToNextMajor(from: "1.1.0"))
 ]
 ```
 
