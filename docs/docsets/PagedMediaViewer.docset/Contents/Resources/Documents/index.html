@@ -20,9 +20,9 @@
     <header class="header">
       <p class="header-col header-col--primary">
         <a class="header-link" href="index.html">
-          PagedMediaViewer 1.0.3 Docs
+          PagedMediaViewer 1.1.0 Docs
         </a>
-         (87% documented)
+         (91% documented)
       </p>
     
       <div class="header-col--secondary">
@@ -62,6 +62,14 @@
             </ul>
           </li>
           <li class="nav-group-name">
+            <a class="nav-group-name-link" href="Extensions.html">Extensions</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Extensions/View.html">View</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
             <a class="nav-group-name-link" href="Protocols.html">Protocols</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
@@ -72,6 +80,14 @@
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Protocols/PagedMediaItem.html">PagedMediaItem</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="Structs.html">Structures</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Structs/PagedMediaSource.html">PagedMediaSource</a>
               </li>
             </ul>
           </li>
@@ -149,6 +165,8 @@
     func pagedMediaViewController(_ pagedMediaViewController: PagedMediaViewController, pagedMediaViewForItemAt index: Int) -&gt; PagedMediaItem
     /// Provides the original view for the given index. Used for transition animations.
     func pagedMediaViewController(_ pagedMediaViewController: PagedMediaViewController, originalViewForItemAt index: Int) -&gt; UIView
+    /// Optional method for providing the original position without a backing view, e.g. for SwiftUI. Defaults to the frame of `originalViewForItemAt`.
+    func pagedMediaViewController(_ pagedMediaViewController: PagedMediaViewController, originalSourceForItemAt index: Int) -&gt; PagedMediaSource
     /// Optional method for specifying the original image for the view or a snapshot. By default `PagedMediaTransitionDriver` will create a snapshot from the original view.
     func pagedMediaViewController(_ pagedMediaViewController: PagedMediaViewController, transitionImageForItemAt index: Int) -&gt; UIImage?
 }
@@ -165,8 +183,38 @@
     func pagedMediaViewController(_ pagedMediaViewController: PagedMediaViewController,
                                      willDismissToOriginalViewAt index: Int,
                                      fromPagedMediaItem mediaItem: PagedMediaItem)
+    /// Optional method called after the dismissal transition ends. Perfect time to resume the original view at index.
+    func pagedMediaViewController(_ pagedMediaViewController: PagedMediaViewController, didDismissToOriginalViewAt index: Int)
 }
 </code></pre>
+<h3 id='swiftui' class='heading'>SwiftUI</h3>
+
+<p>Present the viewer from any SwiftUI hierarchy, lazy containers included. Check <a href="Example/PagedMediaViewer/SwiftUIGalleryExample.swift">SwiftUIGalleryExample.swift</a> from the Example project.</p>
+<pre class="highlight plaintext"><code>ScrollView {
+    LazyVGrid(columns: columns) {
+        ForEach(items) { item in
+            Thumbnail(item: item)
+                .pagedMediaSource(id: item.id)
+                .onTapGesture { openedID = item.id }
+        }
+    }
+    .scrollTargetLayout()
+}
+.scrollPosition(id: $scrollID, anchor: .center)
+.pagedMediaViewer(selection: $openedID, items: items, recenter: $scrollID) { item in
+    FullScreenMediaView(item: item)
+}
+</code></pre>
+
+<ul>
+<li><code>pagedMediaSource(id:)</code> registers the frame of the displayed media, so transitions keep working after a lazy container discards its view.</li>
+<li><code>recenter</code> takes the <code>scrollPosition(id:)</code> binding and keeps the current item laid out while paging.</li>
+<li>For videos, provide <code>transitionImage</code> with a frame from the player and hand playback back in <code>onWillDismiss</code> / <code>onDidDismiss</code>.</li>
+</ul><div class="aside aside-requires">
+    <p class="aside-title">Requires</p>
+    Requires iOS 14.0+, <code>scrollPosition(id:)</code> requires iOS 17.0+.
+
+</div>
 <h2 id='requirements' class='heading'>Requirements</h2>
 
 <ul>
@@ -200,7 +248,7 @@
 
 <p>Once you have your Swift package set up, adding <code>PagedMediaViewer</code> as a dependency is as easy as adding it to the <code>dependencies</code> value of your <code>Package.swift</code>.</p>
 <pre class="highlight swift"><code><span class="nv">dependencies</span><span class="p">:</span> <span class="p">[</span>
-    <span class="o">.</span><span class="nf">package</span><span class="p">(</span><span class="nv">url</span><span class="p">:</span> <span class="s">"https://github.com/sukov/PagedMediaViewer.git"</span><span class="p">,</span> <span class="o">.</span><span class="nf">upToNextMajor</span><span class="p">(</span><span class="nv">from</span><span class="p">:</span> <span class="s">"1.0.3"</span><span class="p">))</span>
+    <span class="o">.</span><span class="nf">package</span><span class="p">(</span><span class="nv">url</span><span class="p">:</span> <span class="s">"https://github.com/sukov/PagedMediaViewer.git"</span><span class="p">,</span> <span class="o">.</span><span class="nf">upToNextMajor</span><span class="p">(</span><span class="nv">from</span><span class="p">:</span> <span class="s">"1.1.0"</span><span class="p">))</span>
 <span class="p">]</span>
 </code></pre>
 <h2 id='author' class='heading'>Author</h2>
@@ -217,7 +265,7 @@
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2025 <a class="link" href="https://github.com/sukov/PagedMediaViewer" target="_blank" rel="external noopener">Gorjan Shukov</a>. All rights reserved. (Last updated: 2025-10-07)</p>
+      <p>&copy; 2026 <a class="link" href="https://github.com/sukov/PagedMediaViewer" target="_blank" rel="external noopener">Gorjan Shukov</a>. All rights reserved. (Last updated: 2026-10-30)</p>
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.15.3</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
     </section>
   </body>

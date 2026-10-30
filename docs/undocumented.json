@@ -2,35 +2,35 @@
   "warnings": [
     {
       "file": "/Users/shukov/Projects/PagedMediaViewer/Source/Classes/PagedMediaViewController.swift",
-      "line": 105,
+      "line": 118,
       "symbol": "PagedMediaViewController.viewDidLoad()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/shukov/Projects/PagedMediaViewer/Source/Classes/PagedMediaViewController.swift",
-      "line": 200,
+      "line": 213,
       "symbol": "PagedMediaViewController.pageViewController(_:willTransitionTo:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/shukov/Projects/PagedMediaViewer/Source/Classes/PagedMediaViewController.swift",
-      "line": 209,
+      "line": 222,
       "symbol": "PagedMediaViewController.pageViewController(_:didFinishAnimating:previousViewControllers:transitionCompleted:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/shukov/Projects/PagedMediaViewer/Source/Classes/PagedMediaViewController.swift",
-      "line": 226,
+      "line": 239,
       "symbol": "PagedMediaViewController.pageViewController(_:viewControllerBefore:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/shukov/Projects/PagedMediaViewer/Source/Classes/PagedMediaViewController.swift",
-      "line": 239,
+      "line": 252,
       "symbol": "PagedMediaViewController.pageViewController(_:viewControllerAfter:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
