@@ -18,11 +18,17 @@ public protocol PagedMediaDataSource: AnyObject {
     func pagedMediaViewController(_ pagedMediaViewController: PagedMediaViewController, pagedMediaViewForItemAt index: Int) -> PagedMediaItem
     /// Provides the original view for the given index. Used for transition animations.
     func pagedMediaViewController(_ pagedMediaViewController: PagedMediaViewController, originalViewForItemAt index: Int) -> UIView
+    /// Optional method for providing the original position without a backing view, e.g. for SwiftUI. Defaults to the frame of `originalViewForItemAt`.
+    func pagedMediaViewController(_ pagedMediaViewController: PagedMediaViewController, originalSourceForItemAt index: Int) -> PagedMediaSource
     /// Optional method for specifying the original image for the view or a snapshot. By default `PagedMediaTransitionDriver` will create a snapshot from the original view.
     func pagedMediaViewController(_ pagedMediaViewController: PagedMediaViewController, transitionImageForItemAt index: Int) -> UIImage?
 }
 
 public extension PagedMediaDataSource {
+    func pagedMediaViewController(_ pagedMediaViewController: PagedMediaViewController, originalSourceForItemAt index: Int) -> PagedMediaSource {
+        PagedMediaSource(view: self.pagedMediaViewController(pagedMediaViewController, originalViewForItemAt: index))
+    }
+
     func pagedMediaViewController(_ pagedMediaViewController: PagedMediaViewController, transitionImageForItemAt index: Int) -> UIImage? {
         self.pagedMediaViewController(pagedMediaViewController, originalViewForItemAt: index).snapshotImage()
     }
@@ -33,6 +39,7 @@ public extension PagedMediaDataSource {
 }
 
 /// Delegate for transition and item change events.
+@MainActor
 public protocol PagedMediaDelegate: AnyObject {
     /// Called just before the transition to a new item begins. Useful for centering table/collection view items behind the scenes for proper transition animation.
     func pagedMediaViewController(_ pagedMediaViewController: PagedMediaViewController, willTransitionTo index: Int)
@@ -42,6 +49,12 @@ public protocol PagedMediaDelegate: AnyObject {
     func pagedMediaViewController(_ pagedMediaViewController: PagedMediaViewController,
                                      willDismissToOriginalViewAt index: Int,
                                      fromPagedMediaItem mediaItem: PagedMediaItem)
+    /// Optional method called after the dismissal transition ends. Perfect time to resume the original view at index.
+    func pagedMediaViewController(_ pagedMediaViewController: PagedMediaViewController, didDismissToOriginalViewAt index: Int)
+}
+
+public extension PagedMediaDelegate {
+    func pagedMediaViewController(_ pagedMediaViewController: PagedMediaViewController, didDismissToOriginalViewAt index: Int) {}
 }
 
 /// The main view controller for presenting and paging through media items.

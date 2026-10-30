@@ -63,6 +63,8 @@ public protocol PagedMediaDataSource: AnyObject {
     func pagedMediaViewController(_ pagedMediaViewController: PagedMediaViewController, pagedMediaViewForItemAt index: Int) -> PagedMediaItem
     /// Provides the original view for the given index. Used for transition animations.
     func pagedMediaViewController(_ pagedMediaViewController: PagedMediaViewController, originalViewForItemAt index: Int) -> UIView
+    /// Optional method for providing the original position without a backing view, e.g. for SwiftUI. Defaults to the frame of `originalViewForItemAt`.
+    func pagedMediaViewController(_ pagedMediaViewController: PagedMediaViewController, originalSourceForItemAt index: Int) -> PagedMediaSource
     /// Optional method for specifying the original image for the view or a snapshot. By default `PagedMediaTransitionDriver` will create a snapshot from the original view.
     func pagedMediaViewController(_ pagedMediaViewController: PagedMediaViewController, transitionImageForItemAt index: Int) -> UIImage?
 }
@@ -82,8 +84,36 @@ public protocol PagedMediaDelegate: AnyObject {
     func pagedMediaViewController(_ pagedMediaViewController: PagedMediaViewController,
                                      willDismissToOriginalViewAt index: Int,
                                      fromPagedMediaItem mediaItem: PagedMediaItem)
+    /// Optional method called after the dismissal transition ends. Perfect time to resume the original view at index.
+    func pagedMediaViewController(_ pagedMediaViewController: PagedMediaViewController, didDismissToOriginalViewAt index: Int)
 }
 ```
+
+### SwiftUI
+
+Present the viewer from any SwiftUI hierarchy, lazy containers included. Check [SwiftUIGalleryExample.swift](Example/PagedMediaViewer/SwiftUIGalleryExample.swift) from the Example project.
+
+```Swift
+ScrollView {
+    LazyVGrid(columns: columns) {
+        ForEach(items) { item in
+            Thumbnail(item: item)
+                .pagedMediaSource(id: item.id)
+                .onTapGesture { openedID = item.id }
+        }
+    }
+    .scrollTargetLayout()
+}
+.scrollPosition(id: $scrollID, anchor: .center)
+.pagedMediaViewer(selection: $openedID, items: items, recenter: $scrollID) { item in
+    FullScreenMediaView(item: item)
+}
+```
+
+- `pagedMediaSource(id:)` registers the frame of the displayed media, so transitions keep working after a lazy container discards its view.
+- `recenter` takes the `scrollPosition(id:)` binding and keeps the current item laid out while paging.
+- For videos, provide `transitionImage` with a frame from the player and hand playback back in `onWillDismiss` / `onDidDismiss`.
+- Requires iOS 14.0+, `scrollPosition(id:)` requires iOS 17.0+.
 
 ## Requirements
 
@@ -128,7 +158,7 @@ Once you have your Swift package set up, adding `PagedMediaViewer` as a dependen
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/sukov/PagedMediaViewer.git", .upToNextMajor(from: "1.0.3"))
+    .package(url: "https://github.com/sukov/PagedMediaViewer.git", .upToNextMajor(from: "1.1.0"))
 ]
 ```
 

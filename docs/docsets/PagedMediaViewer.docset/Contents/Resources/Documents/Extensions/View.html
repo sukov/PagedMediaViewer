@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>View Extension Reference</title>
+    <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
+    <meta charset="utf-8">
+    <script src="../js/jquery.min.js" defer></script>
+    <script src="../js/jazzy.js" defer></script>
+    
+    <script src="../js/lunr.min.js" defer></script>
+    <script src="../js/typeahead.jquery.js" defer></script>
+    <script src="../js/jazzy.search.js" defer></script>
+  </head>
+  <body>
+
+    <a name="//apple_ref/swift/Extension/View" class="dashAnchor"></a>
+
+    <a title="View Extension Reference"></a>
+
+    <header class="header">
+      <p class="header-col header-col--primary">
+        <a class="header-link" href="../index.html">
+          PagedMediaViewer 1.1.0 Docs
+        </a>
+         (91% documented)
+      </p>
+    
+      <div class="header-col--secondary">
+        <form role="search" action="../search.json">
+          <input type="text" placeholder="Search documentation" data-typeahead>
+        </form>
+      </div>
+    
+        <p class="header-col header-col--secondary">
+          <a class="header-link" href="https://github.com/sukov/PagedMediaViewer">
+            <img class="header-icon" src="../img/gh.png" alt="GitHub"/>
+            View on GitHub
+          </a>
+        </p>
+    
+        <p class="header-col header-col--secondary">
+          <a class="header-link" href="dash-feed://https%3A%2F%2Fsukov.github.io%2FPagedMediaViewer%2Fdocsets%2FPagedMediaViewer.xml">
+            <img class="header-icon" src="../img/dash.png" alt="Dash"/>
+            Install in Dash
+          </a>
+        </p>
+    </header>
+
+    <p class="breadcrumbs">
+      <a class="breadcrumb" href="../index.html">PagedMediaViewer</a>
+      <img class="carat" src="../img/carat.png" alt=""/>
+      <a class="breadcrumb" href="../Extensions.html">Extensions</a>
+      <img class="carat" src="../img/carat.png" alt=""/>
+      SwiftUI.View Extension Reference
+    </p>
+
+    <div class="content-wrapper">
+      <nav class="navigation">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="../Classes.html">Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/PagedMediaViewController.html">PagedMediaViewController</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="../Extensions.html">Extensions</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Extensions/View.html">View</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="../Protocols.html">Protocols</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Protocols/PagedMediaDataSource.html">PagedMediaDataSource</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Protocols/PagedMediaDelegate.html">PagedMediaDelegate</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Protocols/PagedMediaItem.html">PagedMediaItem</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="../Structs.html">Structures</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/PagedMediaSource.html">PagedMediaSource</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+
+        <section class="section">
+          <div class="section-content top-matter">
+            <h1>View</h1>
+              <div class="declaration">
+                <div class="language">
+                  
+                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">extension</span> <span class="kt">View</span></code></pre>
+
+                </div>
+              </div>
+            
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="section-content">
+            <div class="task-group">
+              <ul class="item-container">
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7SwiftUI4ViewP16PagedMediaViewerE05pagedE6Source2idQrqd___tSHRd__lF"></a>
+                    <a name="//apple_ref/swift/Method/pagedMediaSource(id:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7SwiftUI4ViewP16PagedMediaViewerE05pagedE6Source2idQrqd___tSHRd__lF">pagedMediaSource(id:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Registers the view as the transition source of the item with the given <code>id</code>. Apply it to the displayed media rather than its cell, so the transition matches the media&rsquo;s frame.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@MainActor</span>
+<span class="kd">func</span> <span class="n">pagedMediaSource</span><span class="o">&lt;</span><span class="kt">ID</span><span class="o">&gt;</span><span class="p">(</span><span class="nv">id</span><span class="p">:</span> <span class="kt">ID</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kd">some</span> <span class="kt">View</span> <span class="k">where</span> <span class="kt">ID</span> <span class="p">:</span> <span class="kt">Hashable</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7SwiftUI4ViewP16PagedMediaViewerE05pagedeF09selection5items8recenter012presentationC6Insets9configure13onIndexChange15transitionImage0N11WillDismiss0n3DidT09mediaItemQrAA7BindingVy2IDQyd__SgG_Sayqd__GAUSgSo06UIEdgeL0VyAD0deC10ControllerCcSgySicSgSo7UIImageCSgqd__cSgyqd___AD0deW0_ptcSgyqd__cSgADA6__pqd__cts12IdentifiableRd__lF"></a>
+                    <a name="//apple_ref/swift/Method/pagedMediaViewer(selection:items:recenter:presentationViewInsets:configure:onIndexChange:transitionImage:onWillDismiss:onDidDismiss:mediaItem:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7SwiftUI4ViewP16PagedMediaViewerE05pagedeF09selection5items8recenter012presentationC6Insets9configure13onIndexChange15transitionImage0N11WillDismiss0n3DidT09mediaItemQrAA7BindingVy2IDQyd__SgG_Sayqd__GAUSgSo06UIEdgeL0VyAD0deC10ControllerCcSgySicSgSo7UIImageCSgqd__cSgyqd___AD0deW0_ptcSgyqd__cSgADA6__pqd__cts12IdentifiableRd__lF">pagedMediaViewer(selection:<wbr>items:<wbr>recenter:<wbr>presentationViewInsets:<wbr>configure:<wbr>onIndexChange:<wbr>transitionImage:<wbr>onWillDismiss:<wbr>onDidDismiss:<wbr>mediaItem:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Presents a <code><a href="../Classes/PagedMediaViewController.html">PagedMediaViewController</a></code> whenever <code>selection</code> points to one of the <code>items</code>.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@MainActor</span>
+<span class="kd">func</span> <span class="n">pagedMediaViewer</span><span class="o">&lt;</span><span class="kt">Item</span><span class="p">:</span> <span class="kt">Identifiable</span><span class="o">&gt;</span><span class="p">(</span>
+    <span class="nv">selection</span><span class="p">:</span> <span class="kt">Binding</span><span class="o">&lt;</span><span class="kt">Item</span><span class="o">.</span><span class="kt">ID</span><span class="p">?</span><span class="o">&gt;</span><span class="p">,</span>
+    <span class="nv">items</span><span class="p">:</span> <span class="p">[</span><span class="kt">Item</span><span class="p">],</span>
+    <span class="nv">recenter</span><span class="p">:</span> <span class="kt">Binding</span><span class="o">&lt;</span><span class="kt">Item</span><span class="o">.</span><span class="kt">ID</span><span class="p">?</span><span class="o">&gt;</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
+    <span class="nv">presentationViewInsets</span><span class="p">:</span> <span class="kt">UIEdgeInsets</span> <span class="o">=</span> <span class="o">.</span><span class="n">zero</span><span class="p">,</span>
+    <span class="nv">configure</span><span class="p">:</span> <span class="p">((</span><span class="kt"><a href="../Classes/PagedMediaViewController.html">PagedMediaViewController</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
+    <span class="nv">onIndexChange</span><span class="p">:</span> <span class="p">((</span><span class="kt">Int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
+    <span class="nv">transitionImage</span><span class="p">:</span> <span class="p">((</span><span class="kt">Item</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">UIImage</span><span class="p">?)?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
+    <span class="nv">onWillDismiss</span><span class="p">:</span> <span class="p">((</span><span class="kt">Item</span><span class="p">,</span> <span class="kt"><a href="../Protocols/PagedMediaItem.html">PagedMediaItem</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
+    <span class="nv">onDidDismiss</span><span class="p">:</span> <span class="p">((</span><span class="kt">Item</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
+    <span class="nv">mediaItem</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">Item</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Protocols/PagedMediaItem.html">PagedMediaItem</a></span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="kd">some</span> <span class="kt">View</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>selection</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Item to present. Set back to <code>nil</code> once the viewer dismisses.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>items</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Items to page through, in the order they are displayed.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>recenter</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Optional <code>scrollPosition(id:)</code> binding, updated while paging so sources in a lazy container stay laid out for the dismissal.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>presentationViewInsets</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Insets on the viewer&rsquo;s presentation frame. Defaults to <code>.zero</code>.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>configure</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Customization of the viewer, e.g. its header and footer containers.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>onIndexChange</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Called after the transition to a new item is completed.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>transitionImage</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Optional image for the item&rsquo;s transition. Defaults to a snapshot of the source, which is blank for video layers.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>onWillDismiss</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Called just before the dismissal transition ends. Perfect time to sync the source with the media item.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>onDidDismiss</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Called after the dismissal transition ends.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>mediaItem</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Provides the media item view for the given item.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+      </article>
+    </div>
+    <section class="footer">
+      <p>&copy; 2026 <a class="link" href="https://github.com/sukov/PagedMediaViewer" target="_blank" rel="external noopener">Gorjan Shukov</a>. All rights reserved. (Last updated: 2026-10-30)</p>
+      <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.15.3</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
+    </section>
+  </body>
+</html>

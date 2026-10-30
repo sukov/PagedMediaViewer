@@ -1,5 +1,5 @@
 PODS:
-  - PagedMediaViewer (1.0.0)
+  - PagedMediaViewer (1.1.0)
 
 DEPENDENCIES:
   - PagedMediaViewer (from `../`)
@@ -9,7 +9,7 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  PagedMediaViewer: 8eaf6f9deb9c20aab6f955a89bacb6688907b71e
+  PagedMediaViewer: 445929d45181612964d397aee5b24a5a3d20c147
 
 PODFILE CHECKSUM: ce58593c7e7189ee365c8af575860d83020b67a9
 

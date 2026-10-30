@@ -15,7 +15,9 @@
 		6DD1AC6A2E7A0A2C006B49ED /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DD1AC692E7A0A28006B49ED /* SceneDelegate.swift */; };
 		6DD2D5E62E70D9AA0074652A /* PagedMediaCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DD2D5E42E70D9AA0074652A /* PagedMediaCell.swift */; };
 		6DD2D5E72E70D9AA0074652A /* PagedMediaViewControllerExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DD2D5E52E70D9AA0074652A /* PagedMediaViewControllerExample.swift */; };
+		9B2E68AA10015268F879DB0A /* MediaAssetLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FF041394241B55F25688AB0 /* MediaAssetLoader.swift */; };
 		B2613BDDF3E9A4C9E2CA05BC /* Pods_PagedMediaViewerTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C06C95AF6CCE3DBE2A44E523 /* Pods_PagedMediaViewerTests.framework */; };
+		E04835D11484F6A088BCB8E3 /* SwiftUIGalleryExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CD04DF99E05B331DB4A2827 /* SwiftUIGalleryExample.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -37,6 +39,8 @@
 
 /* Begin PBXFileReference section */
 		0BF335622BB49D5C298ACE1A /* PagedMediaViewer.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = PagedMediaViewer.podspec; path = ../PagedMediaViewer.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		1FF041394241B55F25688AB0 /* MediaAssetLoader.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MediaAssetLoader.swift; sourceTree = "<group>"; };
+		2CD04DF99E05B331DB4A2827 /* SwiftUIGalleryExample.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SwiftUIGalleryExample.swift; sourceTree = "<group>"; };
 		30C702B2B1749E206A73E7E7 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		390E5F817EE52AA3925A4A77 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 		483848A16CA0221C292A188F /* Pods_PagedMediaViewer_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PagedMediaViewer_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -135,6 +139,8 @@
 				607FACDC1AFB9204008FA782 /* Images.xcassets */,
 				607FACDE1AFB9204008FA782 /* LaunchScreen.xib */,
 				607FACD31AFB9204008FA782 /* Supporting Files */,
+				2CD04DF99E05B331DB4A2827 /* SwiftUIGalleryExample.swift */,
+				1FF041394241B55F25688AB0 /* MediaAssetLoader.swift */,
 			);
 			name = "Example for PagedMediaViewer";
 			path = PagedMediaViewer;
@@ -396,6 +402,8 @@
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
 				6DC25AEC2E7C84D900DA6165 /* MediaView.swift in Sources */,
 				6DD1AC6A2E7A0A2C006B49ED /* SceneDelegate.swift in Sources */,
+				E04835D11484F6A088BCB8E3 /* SwiftUIGalleryExample.swift in Sources */,
+				9B2E68AA10015268F879DB0A /* MediaAssetLoader.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

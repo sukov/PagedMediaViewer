@@ -82,8 +82,58 @@ class MockMediaViewControllerDataSource: MediaViewControllerDataSource {
     var isControlsViewHidden: Bool = false
 }
 
+class ShapedSourceDataSource: MockPagedMediaDataSource {
+    let originalView: UIView
+
+    init(originalView: UIView) {
+        self.originalView = originalView
+    }
+
+    override func pagedMediaViewController(_ pagedMediaViewController: PagedMediaViewController, originalViewForItemAt index: Int) -> UIView {
+        return originalView
+    }
+}
+
+class MockTransitionContext: NSObject, UIViewControllerContextTransitioning {
+    let containerView: UIView
+    let isAnimated = true
+    let isInteractive: Bool
+    let presentationStyle: UIModalPresentationStyle = .custom
+    let targetTransform: CGAffineTransform = .identity
+    private(set) var transitionWasCancelled = false
+    private(set) var completedTransitions: [Bool] = []
+    private let viewControllers: [UITransitionContextViewControllerKey: UIViewController]
+
+    init(containerView: UIView, from: UIViewController, to: UIViewController, isInteractive: Bool) {
+        self.containerView = containerView
+        self.isInteractive = isInteractive
+        self.viewControllers = [.from: from, .to: to]
+    }
+
+    func updateInteractiveTransition(_ percentComplete: CGFloat) {}
+    func finishInteractiveTransition() {}
+    func cancelInteractiveTransition() { transitionWasCancelled = true }
+    func pauseInteractiveTransition() {}
+
+    func completeTransition(_ didComplete: Bool) {
+        completedTransitions.append(didComplete)
+    }
+
+    func viewController(forKey key: UITransitionContextViewControllerKey) -> UIViewController? {
+        return viewControllers[key]
+    }
+
+    func view(forKey key: UITransitionContextViewKey) -> UIView? {
+        return key == .from ? viewControllers[.from]?.view : viewControllers[.to]?.view
+    }
+
+    func initialFrame(for vc: UIViewController) -> CGRect { containerView.bounds }
+    func finalFrame(for vc: UIViewController) -> CGRect { containerView.bounds }
+}
+
 // MARK: - Test Cases
 
+@MainActor
 class PagedMediaViewerTests: XCTestCase {
     var pagedMediaViewController: PagedMediaViewController!
     var mockDataSource: MockPagedMediaDataSource!
@@ -215,5 +265,202 @@ class PagedMediaViewerTests: XCTestCase {
 
         let insets = dataSource.presentationViewInsets(for: pagedMediaVC)
         XCTAssertEqual(insets, .zero)
+    }
+
+    // MARK: - PagedMediaSource
+
+    func testSourceFromViewReadsWindowFrameAndTogglesAlpha() {
+        let window = UIWindow(frame: CGRect(x: 0, y: 0, width: 320, height: 480))
+        let view = UIView(frame: CGRect(x: 30, y: 40, width: 100, height: 60))
+        window.addSubview(view)
+
+        let source = PagedMediaSource(view: view)
+
+        XCTAssertEqual(source.frameInWindow, CGRect(x: 30, y: 40, width: 100, height: 60))
+
+        source.setHidden(true)
+        XCTAssertEqual(view.alpha, 0)
+
+        source.setHidden(false)
+        XCTAssertEqual(view.alpha, 1)
+    }
+
+    func testSourceFromViewReadsCornersAndAspectFill() {
+        let view = UIView(frame: CGRect(x: 0, y: 0, width: 100, height: 60))
+        view.layer.cornerRadius = 12
+        view.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+        view.contentMode = .scaleAspectFill
+
+        let source = PagedMediaSource(view: view)
+
+        XCTAssertEqual(source.cornerRadius, 12)
+        XCTAssertEqual(source.maskedCorners, [.layerMinXMinYCorner, .layerMaxXMinYCorner])
+        XCTAssertEqual(source.contentMode, .scaleAspectFill)
+    }
+
+    func testSourceFromViewTreatsNonFillContentModesAsAspectFit() {
+        let view = UIView(frame: CGRect(x: 0, y: 0, width: 100, height: 60))
+        view.contentMode = .scaleToFill
+
+        XCTAssertEqual(PagedMediaSource(view: view).contentMode, .scaleAspectFit)
+    }
+
+    func testSourceDefaultsKeepTheUnroundedAspectFitTransition() {
+        let source = PagedMediaSource(frameInWindow: CGRect(x: 0, y: 0, width: 10, height: 10))
+
+        XCTAssertEqual(source.cornerRadius, 0)
+        XCTAssertEqual(source.maskedCorners, .allCorners)
+        XCTAssertEqual(source.contentMode, .scaleAspectFit)
+    }
+
+    func testDataSourceDefaultSourceBridgesToOriginalView() {
+        let dataSource = MockPagedMediaDataSource()
+        let pagedMediaVC = PagedMediaViewController(initialIndex: 0)
+
+        let source = dataSource.pagedMediaViewController(pagedMediaVC, originalSourceForItemAt: 0)
+
+        // Mock view is 100x100 and not in a window
+        XCTAssertEqual(source.frameInWindow.size, CGSize(width: 100, height: 100))
+    }
+
+    // MARK: - PagedMediaSourceRegistry
+
+    func testRegistryHasNoSourceForUnrecordedItem() {
+        // Retained by the window, `containerView` is weak
+        let window = UIWindow(frame: CGRect(x: 0, y: 0, width: 320, height: 480))
+        let container = UIView(frame: window.bounds)
+        window.addSubview(container)
+
+        let registry = PagedMediaSourceRegistry()
+        registry.containerView = container
+
+        XCTAssertNotNil(registry.containerView)
+        XCTAssertNil(registry.source(for: AnyHashable("missing")))
+    }
+
+    func testRegistryConvertsRecordedFrameIntoWindowSpace() {
+        let window = UIWindow(frame: CGRect(x: 0, y: 0, width: 320, height: 480))
+        let container = UIView(frame: CGRect(x: 0, y: 100, width: 320, height: 380))
+        window.addSubview(container)
+
+        let registry = PagedMediaSourceRegistry()
+        registry.containerView = container
+        registry.record(AnyHashable("item"), frameInContainer: CGRect(x: 10, y: 20, width: 80, height: 90))
+
+        let source = registry.source(for: AnyHashable("item"))
+
+        XCTAssertEqual(source?.frameInWindow, CGRect(x: 10, y: 120, width: 80, height: 90))
+    }
+
+    func testRegistrySourceHidesAndRevealsItsItem() {
+        let window = UIWindow(frame: CGRect(x: 0, y: 0, width: 320, height: 480))
+        let container = UIView(frame: window.bounds)
+        window.addSubview(container)
+
+        let registry = PagedMediaSourceRegistry()
+        registry.containerView = container
+        registry.record(AnyHashable("item"), frameInContainer: CGRect(x: 0, y: 0, width: 10, height: 10))
+
+        let source = registry.source(for: AnyHashable("item"))
+        XCTAssertNil(registry.hiddenID)
+
+        source?.setHidden(true)
+        XCTAssertEqual(registry.hiddenID, AnyHashable("item"))
+
+        source?.setHidden(false)
+        XCTAssertNil(registry.hiddenID)
+    }
+
+    func testRegistryFallbackSourceIsCenteredInContainer() {
+        let window = UIWindow(frame: CGRect(x: 0, y: 0, width: 320, height: 480))
+        let container = UIView(frame: window.bounds)
+        window.addSubview(container)
+
+        let registry = PagedMediaSourceRegistry()
+        registry.containerView = container
+
+        let frame = registry.fallbackSource().frameInWindow
+
+        XCTAssertEqual(frame.midX, container.bounds.midX)
+        XCTAssertEqual(frame.midY, container.bounds.midY)
+        XCTAssertGreaterThan(frame.width, 0)
+    }
+
+    // MARK: - PagedMediaTransitionDriver
+
+    private func makeTransitionWindow() -> (UIWindow, UIViewController) {
+        let window = UIWindow(frame: CGRect(x: 0, y: 0, width: 320, height: 480))
+        let presenter = UIViewController()
+        window.rootViewController = presenter
+        window.makeKeyAndVisible()
+
+        return (window, presenter)
+    }
+
+    func testPresentationStartsWithTheSourceShape() {
+        let (window, presenter) = makeTransitionWindow()
+        let thumbnail = UIView(frame: CGRect(x: 20, y: 100, width: 120, height: 90))
+        thumbnail.layer.cornerRadius = 16
+        thumbnail.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+        thumbnail.contentMode = .scaleAspectFill
+        presenter.view.addSubview(thumbnail)
+
+        let dataSource = ShapedSourceDataSource(originalView: thumbnail)
+        let viewer = PagedMediaViewController(initialIndex: 0)
+        viewer.pagedMediaDataSource = dataSource
+        viewer.loadViewIfNeeded()
+
+        let containerView = UIView(frame: window.bounds)
+        window.addSubview(containerView)
+        let context = MockTransitionContext(containerView: containerView, from: presenter, to: viewer, isInteractive: true)
+        let driver = PagedMediaTransitionDriver(transitionDirection: .presentation,
+                                                context: context,
+                                                panGestureRecognizer: UIPanGestureRecognizer())
+
+        let mediaView = containerView.subviews.compactMap { $0 as? UIImageView }.first
+
+        XCTAssertEqual(mediaView?.layer.cornerRadius, 16)
+        XCTAssertEqual(mediaView?.layer.maskedCorners, [.layerMinXMinYCorner, .layerMaxXMinYCorner])
+        XCTAssertEqual(mediaView?.contentMode, .scaleAspectFill)
+        XCTAssertNotNil(driver)
+    }
+
+    func testCancelledDismissalReattachesTheMediaWithItsOwnShapeAfterItLands() {
+        let (window, presenter) = makeTransitionWindow()
+        let thumbnail = UIView(frame: CGRect(x: 20, y: 100, width: 120, height: 90))
+        thumbnail.layer.cornerRadius = 16
+        presenter.view.addSubview(thumbnail)
+
+        let dataSource = ShapedSourceDataSource(originalView: thumbnail)
+        let viewer = PagedMediaViewController(initialIndex: 1)
+        viewer.pagedMediaDataSource = dataSource
+        viewer.loadViewIfNeeded()
+
+        let mediaView = viewer.currentViewController!.mediaView
+        mediaView.layer.cornerRadius = 7
+        mediaView.layer.maskedCorners = [.layerMinXMaxYCorner]
+        mediaView.clipsToBounds = false
+        let scrollView = mediaView.superview
+
+        let containerView = UIView(frame: window.bounds)
+        window.addSubview(containerView)
+        let context = MockTransitionContext(containerView: containerView, from: viewer, to: presenter, isInteractive: true)
+        let driver = PagedMediaTransitionDriver(transitionDirection: .dismissal,
+                                                context: context,
+                                                panGestureRecognizer: UIPanGestureRecognizer())
+
+        XCTAssertTrue(mediaView.superview === containerView)
+
+        driver.endInteraction()
+
+        let landed = expectation(description: "transition completes")
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) { landed.fulfill() }
+        wait(for: [landed], timeout: 2)
+
+        XCTAssertEqual(context.completedTransitions, [false])
+        XCTAssertTrue(mediaView.superview === scrollView)
+        XCTAssertEqual(mediaView.layer.cornerRadius, 7)
+        XCTAssertEqual(mediaView.layer.maskedCorners, [.layerMinXMaxYCorner])
+        XCTAssertFalse(mediaView.clipsToBounds)
     }
 }

@@ -6,15 +6,16 @@
 //
 
 import UIKit
+import SwiftUI
 import Photos
 import PagedMediaViewer
 
 class PagedMediaViewControllerExample: UICollectionViewController, UICollectionViewDataSourcePrefetching {
     var fetchResult: PHFetchResult<PHAsset>
-    lazy var imageManager = PHCachingImageManager()
-    let queue: DispatchQueue
     var assetSize: CGSize = CGSize.zero
     private weak var pageCountLabel: UILabel?
+    private var resumesPlaybackAfterDismiss = false
+    private var pausedForViewer: [MediaView] = []
 
     private let cellReuseID = String(describing: PagedMediaCell.self)
 
@@ -26,7 +27,6 @@ class PagedMediaViewControllerExample: UICollectionViewController, UICollectionV
 
     init() {
         self.fetchResult = PHFetchResult<PHAsset>()
-        self.queue = DispatchQueue(label: "com.pagingmedia.photos", qos: .default, attributes: [.concurrent])
 
         let layout = UICollectionViewFlowLayout()
         layout.minimumLineSpacing = 5
@@ -67,6 +67,36 @@ class PagedMediaViewControllerExample: UICollectionViewController, UICollectionV
         collectionView.isPrefetchingEnabled = true
         collectionView.prefetchDataSource = self
         collectionView.backgroundColor = .clear
+
+        // Matches the size cells request, otherwise prefetched images are never hit
+        assetSize = flowLayout.itemSize
+
+        setupSwiftUIExampleButton()
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        // Reload the players released while another screen covered the grid
+        collectionView.reloadItems(at: collectionView.indexPathsForVisibleItems)
+    }
+
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+
+        // Covered by a pushed screen, the players would keep decoding and holding memory
+        collectionView.visibleCells.forEach { ($0 as? PagedMediaCell)?.mediaView.unloadVideo() }
+    }
+
+    private func setupSwiftUIExampleButton() {
+        guard #available(iOS 17.0, *) else { return }
+
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "SwiftUI", primaryAction: UIAction { [weak self] _ in
+            let hostingController = UIHostingController(rootView: SwiftUIGalleryView())
+            hostingController.title = "SwiftUI Grid"
+            self?.navigationController?.pushViewController(hostingController, animated: true)
+        })
+        navigationItem.rightBarButtonItem?.accessibilityIdentifier = "swiftUIExampleButton"
     }
 
     // MARK: UICollectionViewDataSource
@@ -98,15 +128,16 @@ class PagedMediaViewControllerExample: UICollectionViewController, UICollectionV
 
     // MARK: UICollectionViewDataSourcePrefetching
     func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
-        queue.async {
-            self.imageManager.startCachingImages(for: indexPaths.map{self.fetchResult.object(at: $0.item)}, targetSize: self.assetSize, contentMode: .aspectFit, options: nil)
-        }
+        let assets = indexPaths.map { fetchResult.object(at: $0.item) }
+
+        MediaAssetLoader.shared.startCachingImages(for: assets, targetSize: assetSize)
+        MediaAssetLoader.shared.prefetchVideos(in: assets)
     }
 
     func collectionView(_ collectionView: UICollectionView, cancelPrefetchingForItemsAt indexPaths: [IndexPath]) {
-        queue.async {
-            self.imageManager.stopCachingImages(for: indexPaths.map{self.fetchResult.object(at: $0.item)}, targetSize: self.assetSize, contentMode: .aspectFit, options: nil)
-        }
+        let assets = indexPaths.map { fetchResult.object(at: $0.item) }
+
+        MediaAssetLoader.shared.stopCachingImages(for: assets, targetSize: assetSize)
     }
 }
 
@@ -117,12 +148,22 @@ extension PagedMediaViewControllerExample: PagedMediaDataSource {
     }
     
     func pagedMediaViewController(_ pagedMediaViewController: PagedMediaViewController, pagedMediaViewForItemAt index: Int) -> PagedMediaItem {
+        pauseVideosCoveredByViewer()
+
         let asset = fetchResult.object(at: index)
         let mediaView = MediaView.createFullScreenMediaView(for: asset, targetSize: view.bounds.size)
         let cell = visibleCell(at: index)
-        mediaView.syncVideoTime(with: cell.mediaView)
+        mediaView.syncVideoTime(with: cell.mediaView, exact: true)
 
         return mediaView
+    }
+
+    // Also keeps the transition snapshot on the same frame the media item starts from
+    private func pauseVideosCoveredByViewer() {
+        for cell in collectionView.visibleCells.compactMap({ $0 as? PagedMediaCell }) where !cell.mediaView.paused {
+            cell.mediaView.paused = true
+            pausedForViewer.append(cell.mediaView)
+        }
     }
 
     func pagedMediaViewController(_ pagedMediaViewController: PagedMediaViewController, originalViewForItemAt index: Int) -> UIView {
@@ -165,8 +206,21 @@ extension PagedMediaViewControllerExample: PagedMediaDelegate {
         let originalMediaView = visibleCell(at: index).mediaView
         guard originalMediaView.isAnimated == true else { return }
 
-        originalMediaView.paused = mediaItem.paused
-        originalMediaView.syncVideoTime(with: mediaView)
+        // Hold the same frame as the dismissed item, playback resumes once the transition ends
+        resumesPlaybackAfterDismiss = !mediaItem.paused
+        originalMediaView.paused = true
+        originalMediaView.syncVideoTime(with: mediaView, exact: true)
+    }
+
+    func pagedMediaViewController(_ pagedMediaViewController: PagedMediaViewController, didDismissToOriginalViewAt index: Int) {
+        let originalMediaView = visibleCell(at: index).mediaView
+        pausedForViewer.filter { $0 !== originalMediaView }.forEach { $0.paused = false }
+        pausedForViewer.removeAll()
+
+        guard resumesPlaybackAfterDismiss else { return }
+
+        resumesPlaybackAfterDismiss = false
+        originalMediaView.paused = false
     }
 }
 
